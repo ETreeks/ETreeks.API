@@ -40,6 +40,9 @@ namespace ETreeks.Core.IService
         Task<List<TrainerWithStudents>> GetStudentsPerTrainer();
 
         Task<int> GetCountPendingReservation();
+        Task AcceptProfileAdmin(int userId, string newRegistrationStatus);
+        Task<Guser> GetProfileAdmin(int userId);
+        Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto);
 
 
     }

@@ -60,6 +60,10 @@ namespace ETreeks.API
             builder.Services.AddScoped<ITestimonialRepository, TestimonialRepository>();
             builder.Services.AddScoped<ITestimonialService, TestimonialService>();
 
+            builder.Services.AddScoped<IContactRepository, ContactRepository>();
+            builder.Services.AddScoped<IContactService, ContactService>();
+            builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+            builder.Services.AddScoped<IReservationService, ReservationService>();
 
 
             builder.Services.AddAuthentication(x =>

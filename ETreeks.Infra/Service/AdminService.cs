@@ -127,5 +127,22 @@ namespace ETreeks.Infra.Service
         {
             return await _adminRepository.GetCountPendingReservation();
         }
+
+        public async Task AcceptProfileAdmin(int userId, string newRegistrationStatus)
+        {
+            await _adminRepository.AcceptProfileAdmin(userId, newRegistrationStatus);
+        }
+
+        public async Task<Guser> GetProfileAdmin(int userId)
+        {
+            return await _adminRepository.GetProfileAdmin(userId);
+        }
+
+
+
+        public async Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto)
+        {
+            await _adminRepository.UpdateProfileAdmin(updateProfileAdminDto);
+        }
     }
 }

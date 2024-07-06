@@ -152,6 +152,45 @@ namespace ETreeks.API.Controllers
             return await _adminService.GetCountPendingReservation();
         }
 
+        [HttpPost("accept-profile-admin")]
+        public async Task<IActionResult> AcceptProfileAdmin(int userId, string newRegistrationStatus)
+        {
+            await _adminService.AcceptProfileAdmin(userId, newRegistrationStatus);
+            return Ok();
+        }
+
+        [HttpGet("get-profile-admin/{userId}")]
+        public async Task<IActionResult> GetProfileAdmin(int userId)
+        {
+            var user = await _adminService.GetProfileAdmin(userId);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var userDto = new GuserDto
+            {
+                Username = user.Username,
+                Password = user.Password,
+                Fname = user.Fname,
+                Lname = user.Lname,
+                Email = user.Email,
+                ImageName = user.Imagename,
+                Gender = user.Gender,
+                Phone = (decimal)user.Phone
+            };
+
+            return Ok(userDto);
+        }
+
+
+        [HttpPut("update-profile-admin")]
+        public async Task<IActionResult> UpdateProfileAdmin([FromBody] UpdateProfileAdminDto updateProfileAdminDto)
+        {
+            await _adminService.UpdateProfileAdmin(updateProfileAdminDto);
+            return Ok();
+        }
+
 
     }
 }

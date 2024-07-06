@@ -208,5 +208,44 @@ namespace ETreeks.Infra.Repository
 
             return result;
         }
+
+
+        public async Task AcceptProfileAdmin(int userId, string newRegistrationStatus)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("User_ID", userId, DbType.Int32);
+            parameters.Add("new_Registration_Status", newRegistrationStatus, DbType.String);
+
+            await _dbContext.Connection.ExecuteAsync("ADMIN_PACKAGE.ACCEPT_PROFILEADMIN", parameters, commandType: CommandType.StoredProcedure);
+        }
+
+
+        public async Task<Guser> GetProfileAdmin(int userId)
+        {
+            var param = new DynamicParameters();
+            param.Add("User_ID", userId, DbType.Int32, ParameterDirection.Input);
+
+            using (var result = await _dbContext.Connection.QueryMultipleAsync("ADMIN_PACKAGE.GET_PROFILEADMIN", param, commandType: CommandType.StoredProcedure))
+            {
+                var user = await result.ReadFirstOrDefaultAsync<Guser>();
+                return user;
+            }
+        }
+
+        public async Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("User_ID", updateProfileAdminDto.UserId, DbType.Int32);
+            parameters.Add("new_Username", updateProfileAdminDto.NewUsername, DbType.String);
+            parameters.Add("new_Password", updateProfileAdminDto.NewPassword, DbType.String);
+            parameters.Add("new_Fname", updateProfileAdminDto.NewFname, DbType.String);
+            parameters.Add("new_Lname", updateProfileAdminDto.NewLname, DbType.String);
+            parameters.Add("new_Email", updateProfileAdminDto.NewEmail, DbType.String);
+            parameters.Add("new_ImageName", updateProfileAdminDto.NewImageName, DbType.String);
+            parameters.Add("new_Gender", updateProfileAdminDto.NewGender, DbType.String);
+            parameters.Add("new_Phone", updateProfileAdminDto.NewPhone, DbType.Decimal);
+
+            await _dbContext.Connection.ExecuteAsync("ADMIN_PACKAGE.UPDATE_PROFILEADMIN", parameters, commandType: CommandType.StoredProcedure);
+        }
     }
 }
