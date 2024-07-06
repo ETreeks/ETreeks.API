@@ -46,6 +46,7 @@ namespace ETreeks.API.Controllers
         [HttpDelete("{id}")] 
         public async Task DeleteContact(int id)
         {
+
             await _contactService.DeleteContact(id);
         }
     }
