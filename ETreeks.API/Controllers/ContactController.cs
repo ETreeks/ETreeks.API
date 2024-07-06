@@ -11,7 +11,6 @@ namespace ETreeks.API.Controllers
     [ApiController]
     public class ContactController : ControllerBase
     {
-
         private readonly IContactService _contactService;
 
         public ContactController(IContactService contactService)
