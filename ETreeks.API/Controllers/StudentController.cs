@@ -22,7 +22,7 @@ namespace ETreeks.API.Controllers
             return await _studentService.CreateBookingRequest(reservation);
         }
 
-        [HttpGet("GetTrainerSessionsByUsername/{username}")]
+        [HttpGet("GetTrainerSessionsByUsername/{Username}")]
         public IActionResult GetTrainerSessionsByUsername(string username)
         {
             var sessions = _studentService.GetTrainerSessionsByUsername(username);
@@ -33,7 +33,7 @@ namespace ETreeks.API.Controllers
             return Ok(sessions);
         }
 
-        [HttpGet("GetTrainerSessionsByID/{id}")]
+        [HttpGet("GetTrainerSessionsByID/{Id}")]
         public IActionResult GetTrainerSessionsByID(int trainerId)
         {
             var sessions = _studentService.GetTrainerSessionsByID(trainerId);
