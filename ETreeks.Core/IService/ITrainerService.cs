@@ -16,5 +16,7 @@ namespace ETreeks.Core.IService
         Task RejectReservationAsync(int reservationId);
 
         Task<List<Reservation>> GetAllPendingReservation();
-    }
+		Task<ProfileTrainerDTO> ViewProfile(int id);
+		Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto);
+	}
 }

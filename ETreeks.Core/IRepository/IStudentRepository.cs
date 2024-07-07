@@ -14,5 +14,8 @@ namespace ETreeks.Core.IRepository
 
         List<SessionDTO> GetTrainerSessionsByUsername(string username);
         List<SessionDTO> GetTrainerSessionsByID(int trainerId);
-    }
+
+		Task<ProfileStudentDTO> Viewprofile(int id);
+		Task<bool> UpdateProfile(ProfileStudentDTO profileStudentDto);
+	}
 }
