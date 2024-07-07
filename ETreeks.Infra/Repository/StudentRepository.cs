@@ -49,6 +49,48 @@ namespace ETreeks.Infra.Repository
             return result.ToList();
         }
 
+		public async Task<ProfileStudentDTO> Viewprofile(int id)
+		{
+			var param = new DynamicParameters();
+			param.Add("User_ID", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
 
-    }
+			using (var connection = _dbContext.Connection)
+			{
+				var result = await connection.QueryAsync<ProfileStudentDTO, AddressDto, ProfileStudentDTO>(
+					"STUDENT_PACKAGE.VIEW_PROFILESTUDENT",
+					(profile, address) =>
+					{
+						profile.Address = address;
+						return profile;
+					},
+					param,
+					commandType: CommandType.StoredProcedure,
+					splitOn: "LONGITUDE");
+
+				return result.FirstOrDefault();
+			}
+		}
+
+		public async Task<bool> UpdateProfile(ProfileStudentDTO profileStudentDto)
+		{
+			var param = new DynamicParameters();
+			param.Add("User_ID", profileStudentDto.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+			param.Add("new_Password", profileStudentDto.Password, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_Fname", profileStudentDto.Fname, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_Lname", profileStudentDto.Lname, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_Email", profileStudentDto.Email, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_ImageName", profileStudentDto.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_Phone", profileStudentDto.Phone, dbType: DbType.Int64, direction: ParameterDirection.Input);
+			param.Add("new_Longitude", profileStudentDto.Address.Longitude, dbType: DbType.Double, direction: ParameterDirection.Input);
+			param.Add("new_Latitude", profileStudentDto.Address.Latitude, dbType: DbType.Double, direction: ParameterDirection.Input);
+			param.Add("new_City", profileStudentDto.Address.City, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_Country", profileStudentDto.Address.Country, dbType: DbType.String, direction: ParameterDirection.Input);
+
+			using (var connection = _dbContext.Connection)
+			{
+				await connection.ExecuteAsync("STUDENT_PACKAGE.UPDATE_PROFILESTUDENT", param, commandType: CommandType.StoredProcedure);
+				return true;
+			}
+		}
+	}
 }
