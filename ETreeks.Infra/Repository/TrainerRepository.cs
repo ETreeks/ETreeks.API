@@ -35,7 +35,7 @@ namespace ETreeks.Infra.Repository
             var param = new DynamicParameters();
             param.Add("reservation_id", reservationId, DbType.Int32, ParameterDirection.Input);
 
-            await _dbContext.Connection.ExecuteAsync("Reservation_Package.AcceptReservation", param, commandType: CommandType.StoredProcedure);
+            await _dbContext.Connection.ExecuteAsync("Trainer_Package.AcceptReservation", param, commandType: CommandType.StoredProcedure);
         }
 
 
@@ -44,7 +44,7 @@ namespace ETreeks.Infra.Repository
             var param = new DynamicParameters();
             param.Add("reservation_id", reservationId, DbType.Int32, ParameterDirection.Input);
 
-            await _dbContext.Connection.ExecuteAsync("Reservation_Package.RejectReservation", param, commandType: CommandType.StoredProcedure);
+            await _dbContext.Connection.ExecuteAsync("Trainer_Package.RejectReservation", param, commandType: CommandType.StoredProcedure);
         }
 
         public async Task<List<Reservation>> GetAllPendingReservation()
