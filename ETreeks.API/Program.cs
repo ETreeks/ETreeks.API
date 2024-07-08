@@ -65,8 +65,17 @@ namespace ETreeks.API
             builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
             builder.Services.AddScoped<IReservationService, ReservationService>();
 
+			builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+			builder.Services.AddScoped<ICategoryService, CategoryService>();
 
-            builder.Services.AddAuthentication(x =>
+			builder.Services.AddScoped<IAboutRepository, AboutRepository>();
+			builder.Services.AddScoped<IAboutService, AboutService>();
+
+			builder.Services.AddScoped<ICourseSessionRepository, CourseSessionRepository>();
+			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
+
+
+			builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;

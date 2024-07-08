@@ -17,5 +17,7 @@ namespace ETreeks.Core.IRepository
 
         Task<List<Reservation>> GetAllPendingReservation();
 
-    }
+		Task<ProfileTrainerDTO> ViewProfile(int id);
+		Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto);
+	}
 }

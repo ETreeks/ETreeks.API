@@ -40,5 +40,15 @@ namespace ETreeks.Infra.Service
         {
             return await _trainerRepository.GetAllPendingReservation();
         }
-    }
+
+		public async Task<ProfileTrainerDTO> ViewProfile(int id)
+		{
+			return await _trainerRepository.ViewProfile(id);
+		}
+
+		public async Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto)
+		{
+			return await _trainerRepository.UpdateProfile(profileTrainerDto);
+		}
+	}
 }

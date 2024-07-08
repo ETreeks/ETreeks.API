@@ -1,4 +1,5 @@
 ﻿using ETreeks.Core.Data;
+using ETreeks.Core.DTO;
 using ETreeks.Core.IService;
 using ETreeks.Infra.Service;
 using Microsoft.AspNetCore.Http;
@@ -22,7 +23,7 @@ namespace ETreeks.API.Controllers
             return await _studentService.CreateBookingRequest(reservation);
         }
 
-        [HttpGet("GetTrainerSessionsByUsername")]
+        [HttpGet("GetTrainerSessionsByUsername/{Username}")]
         public IActionResult GetTrainerSessionsByUsername(string username)
         {
             var sessions = _studentService.GetTrainerSessionsByUsername(username);
@@ -33,7 +34,7 @@ namespace ETreeks.API.Controllers
             return Ok(sessions);
         }
 
-        [HttpGet("GetTrainerSessionsByID")]
+        [HttpGet("GetTrainerSessionsByID/{Id}")]
         public IActionResult GetTrainerSessionsByID(int trainerId)
         {
             var sessions = _studentService.GetTrainerSessionsByID(trainerId);
@@ -43,5 +44,26 @@ namespace ETreeks.API.Controllers
             }
             return Ok(sessions);
         }
-    }
+		[HttpGet("{id}")]
+		public async Task<IActionResult> ViewProfile(int id)
+		{
+			var profile = await _studentService.ViewProfile(id);
+			if (profile == null)
+			{
+				return NotFound();
+			}
+			return Ok(profile);
+		}
+
+		[HttpPut]
+		public async Task<IActionResult> UpdateProfile([FromBody] ProfileStudentDTO profileStudentDto)
+		{
+			var result = await _studentService.UpdateProfile(profileStudentDto);
+			if (result)
+			{
+				return NoContent();
+			}
+			return BadRequest();
+		}
+	}
 }

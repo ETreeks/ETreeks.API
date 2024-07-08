@@ -32,5 +32,14 @@ namespace ETreeks.Infra.Service
         {
             return _studentRepository.GetTrainerSessionsByUsername(username);
         }
-    }
+		public async Task<ProfileStudentDTO> ViewProfile(int id)
+		{
+			return await _studentRepository.Viewprofile(id);
+		}
+
+		public async Task<bool> UpdateProfile(ProfileStudentDTO profileStudentDto)
+		{
+			return await _studentRepository.UpdateProfile(profileStudentDto);
+		}
+	}
 }
