@@ -8,8 +8,8 @@ namespace ETreeks.Core.Data
         public decimal Id { get; set; }
         public string? Reservationstatus { get; set; }
         public DateTime? Reservationdate { get; set; }
-        public decimal? GusersId { get; set; }
-        public decimal? CourseId { get; set; }
+        public decimal? Gusers_Id { get; set; }
+        public decimal? Course_Id { get; set; }
         public decimal? Finalmark { get; set; }
         public string? Completed { get; set; }
 

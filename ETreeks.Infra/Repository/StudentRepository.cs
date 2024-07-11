@@ -24,8 +24,8 @@ namespace ETreeks.Infra.Repository
         public async Task<int> CreateBookingRequest(Reservation reservation)
         {
             var param = new DynamicParameters();
-            param.Add("GUsers_ID", reservation.GusersId, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("Course_ID", reservation.CourseId, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("GUsers_ID", reservation.Gusers_Id, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("Course_ID", reservation.Course_Id, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("Booking_Package.CreateBookingRequest", param, commandType: CommandType.StoredProcedure);

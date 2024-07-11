@@ -27,8 +27,8 @@ namespace ETreeks.Infra.Repository
             param.Add("ReservationStatus", reservation.Reservationstatus , DbType.String,direction: ParameterDirection.Input);
             param.Add("ReservationDate", reservation.Reservationdate, DbType.Date, direction: ParameterDirection.Input);
             param.Add("FinalMark", reservation.Finalmark, DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("GUsers_ID", reservation.GusersId, DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("Course_ID", reservation.CourseId, DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("GUsers_ID", reservation.Gusers_Id, DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("Course_ID", reservation.Course_Id, DbType.Decimal, direction: ParameterDirection.Input);
             param.Add("R_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("Reservation_Pkg.CREATE_RESERVATION", param, commandType: CommandType.StoredProcedure);
@@ -68,8 +68,8 @@ namespace ETreeks.Infra.Repository
             parameters.Add("new_ReservationStatus", reservation.Reservationstatus, DbType.String, ParameterDirection.Input);
             parameters.Add("new_ReservationDate", reservation.Reservationdate, DbType.Date, ParameterDirection.Input);
             parameters.Add("new_FinalMark", reservation.Finalmark, DbType.Decimal, ParameterDirection.Input);
-            parameters.Add("new_GUsers_ID", reservation.GusersId, DbType.Int32, ParameterDirection.Input);
-            parameters.Add("new_Course_ID", reservation.CourseId, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("new_GUsers_ID", reservation.Gusers_Id, DbType.Int32, ParameterDirection.Input);
+            parameters.Add("new_Course_ID", reservation.Course_Id, DbType.Int32, ParameterDirection.Input);
 
             await _dbContext.Connection.ExecuteAsync("Reservation_Pkg.UPDATE_RESERVATION", parameters, commandType: CommandType.StoredProcedure);
         }

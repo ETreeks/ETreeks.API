@@ -592,7 +592,7 @@ namespace ETreeks.Core.Data
                     .HasColumnName("COMPLETED")
                     .HasDefaultValueSql("'No'");
 
-                entity.Property(e => e.CourseId)
+                entity.Property(e => e.Course_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("COURSE_ID");
 
@@ -600,7 +600,7 @@ namespace ETreeks.Core.Data
                     .HasColumnType("NUMBER")
                     .HasColumnName("FINALMARK");
 
-                entity.Property(e => e.GusersId)
+                entity.Property(e => e.Gusers_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("GUSERS_ID");
 
@@ -617,13 +617,13 @@ namespace ETreeks.Core.Data
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => d.CourseId)
+                    .HasForeignKey(d => d.Course_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_COURSE2");
 
                 entity.HasOne(d => d.Gusers)
                     .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => d.GusersId)
+                    .HasForeignKey(d => d.Gusers_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_GUSERSCR");
             });
