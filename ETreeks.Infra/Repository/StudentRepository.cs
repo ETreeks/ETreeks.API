@@ -27,7 +27,7 @@ namespace ETreeks.Infra.Repository
             param.Add("GUsers_ID", reservation.Gusers_Id, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("Course_ID", reservation.Course_Id, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-
+			//:)
             var result = await _dbContext.Connection.ExecuteAsync("Booking_Package.CreateBookingRequest", param, commandType: CommandType.StoredProcedure);
 
             int courseid = param.Get<int>("C_id");
