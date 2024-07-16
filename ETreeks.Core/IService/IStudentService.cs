@@ -16,5 +16,6 @@ namespace ETreeks.Core.IService
         List<SessionDTO> GetTrainerSessionsByID(int trainerId);
 		Task<ProfileStudentDTO> ViewProfile(int id);
 		Task<bool> UpdateProfile(ProfileStudentDTO profileStudentDto);
+        //:)
 	}
 }
