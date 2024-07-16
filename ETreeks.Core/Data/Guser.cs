@@ -31,7 +31,7 @@ namespace ETreeks.Core.Data
         public decimal? Phone { get; set; }
         public string? BioTrainer { get; set; }
         public string? RegistrationStatusTrainer { get; set; }
-        public decimal? RoleId { get; set; }
+        public decimal? Role_Id { get; set; }
         public decimal? AddressId { get; set; }
 
         public virtual Address? Address { get; set; }

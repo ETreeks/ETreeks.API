@@ -26,7 +26,8 @@ namespace ETreeks.Infra.Repository
 		{
 			var param = new DynamicParameters();
 			param.Add("category_name", category.Categoryname, dbType: DbType.String, direction: ParameterDirection.Input);
-			var result = await _dbContext.Connection.ExecuteAsync("Category_Package.CreateCategory", param, commandType: CommandType.StoredProcedure);
+            param.Add("Image_name", category.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+            var result = await _dbContext.Connection.ExecuteAsync("Category_Package.CreateCategory", param, commandType: CommandType.StoredProcedure);
 		}
 
 		public async Task DeleteCategory(int id)
@@ -38,24 +39,25 @@ namespace ETreeks.Infra.Repository
 
 		public async Task<List<Category>> GetAllCategories()
 		{
-			var result = await _dbContext.Connection.QueryAsync<Category>("CATEGORY_PACKAGE.GETALLCATEGORIES", commandType: CommandType.StoredProcedure);
-			return result.ToList();
-
-			//var result = await _dbContext.Connection.QueryAsync<Category, Course, Category>("Category_Package.GetAllCategories", (category, course) =>
-			//{
-			//	category.Courses.Add(course);
-			//	return category;
-
-			//},
-			//splitOn: "courseid",
-			//	commandType: CommandType.StoredProcedure);
+			//var result = await _dbContext.Connection.QueryAsync<Category>("CATEGORY_PACKAGE.GETALLCATEGORIES", commandType: CommandType.StoredProcedure);
 			//return result.ToList();
+
+			var result = await _dbContext.Connection.QueryAsync<Category, Course, Category>("Category_Package.GetAllCategories", (category, course) =>
+			{
+				category.Courses.Add(course);
+				return category;
+
+			},
+
+			splitOn: "id",
+				commandType: CommandType.StoredProcedure);
+			return result.ToList();
 		}
 
 		public async Task<Category> GetCategoryById(int id)
 		{
 			var param = new DynamicParameters();
-			param.Add("Category_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+			param.Add("cat_ID", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
 			var result = await _dbContext.Connection.QueryAsync<Category>("Category_Package.GetCategoryById", param, commandType: CommandType.StoredProcedure);
 			return result.FirstOrDefault();
 		}

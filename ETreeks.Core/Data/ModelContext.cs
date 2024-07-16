@@ -246,13 +246,13 @@ namespace ETreeks.Core.Data
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.AcceptedStatus)
+                entity.Property(e => e.Accepted_Status)
                     .HasMaxLength(8)
                     .IsUnicode(false)
                     .HasColumnName("ACCEPTED_STATUS")
                     .HasDefaultValueSql("'Pending'");
 
-                entity.Property(e => e.CategoryId)
+                entity.Property(e => e.Category_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("CATEGORY_ID");
 
@@ -280,19 +280,19 @@ namespace ETreeks.Core.Data
                     .HasColumnType("NUMBER")
                     .HasColumnName("PRICE");
 
-                entity.Property(e => e.TrainerId)
+                entity.Property(e => e.Trainer_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("TRAINER_ID");
 
                 entity.HasOne(d => d.Category)
                     .WithMany(p => p.Courses)
-                    .HasForeignKey(d => d.CategoryId)
+                    .HasForeignKey(d => d.Category_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_CAT");
 
                 entity.HasOne(d => d.Trainer)
                     .WithMany(p => p.Courses)
-                    .HasForeignKey(d => d.TrainerId)
+                    .HasForeignKey(d => d.Trainer_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_TRAINER_IDR");
             });
@@ -409,7 +409,7 @@ namespace ETreeks.Core.Data
                     .HasColumnName("REGISTRATION_STATUS_TRAINER")
                     .HasDefaultValueSql("'Pending'");
 
-                entity.Property(e => e.RoleId)
+                entity.Property(e => e.Role_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("ROLE_ID");
 
@@ -431,7 +431,7 @@ namespace ETreeks.Core.Data
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.Gusers)
-                    .HasForeignKey(d => d.RoleId)
+                    .HasForeignKey(d => d.Role_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ROLE");
             });

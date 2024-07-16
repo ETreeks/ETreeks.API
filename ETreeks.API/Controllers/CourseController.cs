@@ -1,5 +1,6 @@
 ﻿using ETreeks.Core.Data;
 using ETreeks.Core.IService;
+using ETreeks.Infra.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,10 +18,11 @@ namespace ETreeks.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCourse(Course course)
+        public async Task CreateCourse(Course course)
         {
-            var courseId = await _courseService.CreateCourseAsync(course);
-            return Ok(new { Id = courseId });
+            //var courseId = await _courseService.CreateCourseAsync(course);
+            //return Ok(new { Id = courseId });
+            await _courseService.CreateCourseAsync(course);
         }
 
         [HttpDelete("{courseId}")]

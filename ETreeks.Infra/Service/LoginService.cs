@@ -34,7 +34,7 @@ namespace ETreeks.Infra.Service
 
                 var claims = new List<Claim>
                 {
-                    new Claim("RoleId" , result.RoleId.ToString()),
+                    new Claim("RoleId" , result.Role_Id.ToString()),
                     new Claim("UserId", result.Id.ToString())
                 };
                 var tokenOptions = new JwtSecurityToken(

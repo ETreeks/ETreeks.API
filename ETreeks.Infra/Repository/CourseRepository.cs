@@ -19,21 +19,21 @@ namespace ETreeks.Infra.Repository
         {
             _dbContext = dbContext;
         }
-        public async Task<int> CreateCourseAsync(Course course)
+        public async Task CreateCourseAsync(Course course)
         {
             var param = new DynamicParameters();
-            param.Add("C_CourseName", course.Name, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_ImageName", course.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_Price", course.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_PassMark", course.Passmark, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_CategoryId", course.CategoryId, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_TrainerId", course.TrainerId, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            param.Add("course_name", course.Name, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("image_name", course.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("price", course.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("pass_mark", course.Passmark, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("category_id", course.Category_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("trainer_id", course.Trainer_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            //param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("COURSE_PACKAGE.CreateCourse", param, commandType: CommandType.StoredProcedure);
 
-            int courseId = param.Get<int>("C_id");
-            return courseId;
+            //int courseId = param.Get<int>("C_id");
+            //return courseId;
         }
 
         public async Task<int> DeleteCourseAsync(int courseId)
@@ -70,8 +70,8 @@ namespace ETreeks.Infra.Repository
             param.Add("C_ImageName", course.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("C_Price", course.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
             param.Add("C_PassMark", course.Passmark, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_CategoryId", course.CategoryId, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_TrainerId", course.TrainerId, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("C_CategoryId", course.Category_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("C_TrainerId", course.Trainer_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
             param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("COURSE_PACKAGE.UpdateCourse", param, commandType: CommandType.StoredProcedure);

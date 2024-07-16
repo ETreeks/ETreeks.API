@@ -9,7 +9,7 @@ namespace ETreeks.Core.IRepository
 {
     public interface ICourseRepository
     {
-        Task<int> CreateCourseAsync(Course course);
+        Task CreateCourseAsync(Course course);
         Task<int> UpdateCourseAsync(Course course);
         Task<int> DeleteCourseAsync(int courseId);
         Task<List<Course>> GetAllCoursesAsync();

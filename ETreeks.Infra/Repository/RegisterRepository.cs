@@ -30,7 +30,9 @@ namespace ETreeks.Infra.Repository
             p.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = _dbContext.Connection.ExecuteAsync("Register_Package.RegisterStudent", p, commandType: CommandType.StoredProcedure);
-            int RSID = p.Get<int>("C_id");
+            //int RSID = p.Get<int>("C_id");
+            int RSID = p.Get<int?>("C_id") ?? default(int);
+
             return RSID;
     
         }

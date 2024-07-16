@@ -18,9 +18,9 @@ namespace ETreeks.Infra.Service
             _courseRepository = courseRepository;
         }
 
-        public async Task<int> CreateCourseAsync(Course course)
+        public async Task CreateCourseAsync(Course course)
         {
-            return await _courseRepository.CreateCourseAsync(course);
+             await _courseRepository.CreateCourseAsync(course);
         }
 
         public async Task<int> DeleteCourseAsync(int courseId)

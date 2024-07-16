@@ -144,5 +144,10 @@ namespace ETreeks.Infra.Service
         {
             await _adminRepository.UpdateProfileAdmin(updateProfileAdminDto);
         }
+
+        public async Task<int> GetCountAcceptedReservation()
+        {
+            return await _adminRepository.GetCountAcceptedReservation();
+        }
     }
 }

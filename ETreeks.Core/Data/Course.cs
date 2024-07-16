@@ -16,10 +16,10 @@ namespace ETreeks.Core.Data
         public string? Name { get; set; }
         public string? Imagename { get; set; }
         public DateTime? Createddate { get; set; }
-        public string? AcceptedStatus { get; set; }
+        public string? Accepted_Status { get; set; }
         public decimal? Price { get; set; }
-        public decimal? CategoryId { get; set; }
-        public decimal? TrainerId { get; set; }
+        public decimal? Category_Id { get; set; }
+        public decimal? Trainer_Id { get; set; }
         public string? Passmark { get; set; }
 
         public virtual Category? Category { get; set; }

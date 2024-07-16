@@ -75,7 +75,16 @@ namespace ETreeks.API
 			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
 
 
-			builder.Services.AddAuthentication(x =>
+            builder.Services.AddCors(corsOptions =>
+            {
+                corsOptions.AddPolicy("policy",
+                builder =>
+                {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                });
+            });
+
+            builder.Services.AddAuthentication(x =>
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -107,7 +116,7 @@ namespace ETreeks.API
 
             app.UseAuthorization();
 
-
+            app.UseCors("policy");
             app.MapControllers();
 
             app.Run();

@@ -247,5 +247,14 @@ namespace ETreeks.Infra.Repository
 
             await _dbContext.Connection.ExecuteAsync("ADMIN_PACKAGE.UPDATE_PROFILEADMIN", parameters, commandType: CommandType.StoredProcedure);
         }
+
+        public async Task<int> GetCountAcceptedReservation()
+        {
+            var result = await _dbContext.Connection.QueryFirstOrDefaultAsync<int>(
+             "Admin_Package.GetCountAcceptedReservation",
+              commandType: CommandType.StoredProcedure);
+
+            return result;
+        }
     }
 }
