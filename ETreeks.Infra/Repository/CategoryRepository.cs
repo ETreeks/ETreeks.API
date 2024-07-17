@@ -44,7 +44,8 @@ namespace ETreeks.Infra.Repository
 
 			var result = await _dbContext.Connection.QueryAsync<Category, Course, Category>("Category_Package.GetAllCategories", (category, course) =>
 			{
-				category.Courses.Add(course);
+               
+                category.Courses.Add(course);
 				return category;
 
 			},
@@ -62,15 +63,25 @@ namespace ETreeks.Infra.Repository
 			return result.FirstOrDefault();
 		}
 
+		//public async Task UpdateCategory(Category category)
+		//{
+		//	var param = new DynamicParameters();
+		//	param.Add("Category_id", category.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+		//	param.Add("(new_name", category.Categoryname, dbType: DbType.String, direction: ParameterDirection.Input);
+		//	param.Add("(new_image", category.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+
+		//	var result = await _dbContext.Connection.ExecuteAsync("Category_Package.UPDATECATEGORY", param, commandType: CommandType.StoredProcedure);
+		//}
 		public async Task UpdateCategory(Category category)
 		{
 			var param = new DynamicParameters();
 			param.Add("Category_id", category.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-			param.Add("(Category_name", category.Categoryname, dbType: DbType.String, direction: ParameterDirection.Input);
-			param.Add("(new_image", category.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_name", category.Categoryname, dbType: DbType.String, direction: ParameterDirection.Input);
+			param.Add("new_image", category.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
 
 			var result = await _dbContext.Connection.ExecuteAsync("Category_Package.UPDATECATEGORY", param, commandType: CommandType.StoredProcedure);
 		}
+
 
 
 

@@ -36,14 +36,14 @@ namespace ETreeks.Infra.Repository
             //return courseId;
         }
 
-        public async Task<int> DeleteCourseAsync(int courseId)
+        public async Task DeleteCourseAsync(int courseId)
         {
             var param = new DynamicParameters();
-            param.Add("C_CourseID", courseId, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            param.Add("course_id", courseId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            //param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
             var result = await _dbContext.Connection.ExecuteAsync("COURSE_PACKAGE.DeleteCourse", param, commandType: CommandType.StoredProcedure);
-            int CourseId = param.Get<int>("C_id");
-            return CourseId;
+            //int CourseId = param.Get<int>("C_id");
+            //return CourseId;
         }
 
 
@@ -62,21 +62,21 @@ namespace ETreeks.Infra.Repository
             return result.FirstOrDefault();
         }
 
-        public async Task<int> UpdateCourseAsync(Course course)
+        public async Task UpdateCourseAsync(Course course)
         {
             var param = new DynamicParameters();
-            param.Add("C_CourseID", course.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            param.Add("C_CourseName", course.Name, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_ImageName", course.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_Price", course.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_PassMark", course.Passmark, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_CategoryId", course.Category_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_TrainerId", course.Trainer_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            param.Add("course_id", course.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("new_course_name", course.Name, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("new_image_name", course.Imagename, dbType: DbType.String, direction: ParameterDirection.Input);
+            param.Add("new_price", course.Price, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("new_pass_mark", course.Passmark, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("new_category_id", course.Category_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            param.Add("new_trainer_id", course.Trainer_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input);
+            //param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("COURSE_PACKAGE.UpdateCourse", param, commandType: CommandType.StoredProcedure);
-            int courseId = param.Get<int>("C_id");
-            return courseId;
+            //int courseId = param.Get<int>("C_id");
+            //return courseId;
         }
     }
 

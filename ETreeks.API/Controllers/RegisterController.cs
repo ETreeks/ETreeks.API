@@ -31,37 +31,56 @@ namespace ETreeks.API.Controllers
             return await _registerService.RegisterTrainer(guser);
         }
 
-        [HttpPost]
-        [Route("UploadImage")]
-        public string UploadImage()
-        {
-            var file = Request.Form.Files[0];
-            var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+        //[HttpPost]
+        //[Route("UploadImage")]
+        //public string UploadImage()
+        //{
+        //    var file = Request.Form.Files[0];
+        //    var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
            
-            var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks.API\\ETreeks.API\\ETreeks.API\\Images\\", fileName);
-            using (var stream = new FileStream(fullPath, FileMode.Create))
-            {
-                file.CopyTo(stream);
-            }
+        //    var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks.API\\ETreeks.API\\ETreeks.API\\Images\\", fileName);
+        //    using (var stream = new FileStream(fullPath, FileMode.Create))
+        //    {
+        //        file.CopyTo(stream);
+        //    }
 
-            return fileName;
-        }
-
+        //    return fileName;
+        //}
         [HttpPost]
-        [Route("UploadPDF")]
-        public string UploadPDF()
+        [Route("UploadGImage")]
+        public Guser UploadImage()
         {
             var file = Request.Form.Files[0];
             var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
 
-            var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks.API\\ETreeks.API\\ETreeks.API\\PDF\\", fileName);
+            var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks\\src\\assets\\Images", fileName);
             using (var stream = new FileStream(fullPath, FileMode.Create))
             {
                 file.CopyTo(stream);
-            }
 
-            return fileName;
+                Guser item = new Guser();
+                //item.Imagename = file.FileName;
+                item.Imagename = fileName;
+                return item;
+            }
         }
+
+
+        //[HttpPost]
+        //[Route("UploadPDF")]
+        //public string UploadPDF()
+        //{
+        //    var file = Request.Form.Files[0];
+        //    var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+        //    var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks.API\\ETreeks.API\\ETreeks.API\\PDF\\", fileName);
+        //    using (var stream = new FileStream(fullPath, FileMode.Create))
+        //    {
+        //        file.CopyTo(stream);
+        //    }
+
+        //    return fileName;
+        //}
 
     }
 }

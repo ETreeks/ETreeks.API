@@ -23,9 +23,9 @@ namespace ETreeks.Infra.Service
              await _courseRepository.CreateCourseAsync(course);
         }
 
-        public async Task<int> DeleteCourseAsync(int courseId)
+        public async Task DeleteCourseAsync(int courseId)
         {
-            return await _courseRepository.DeleteCourseAsync(courseId);
+           await _courseRepository.DeleteCourseAsync(courseId);
         }
 
         public async Task<List<Course>> GetAllCoursesAsync()
@@ -38,9 +38,9 @@ namespace ETreeks.Infra.Service
             return await _courseRepository.GetCourseByIdAsync(courseId);
         }
 
-        public async Task<int> UpdateCourseAsync(Course course)
+        public async Task UpdateCourseAsync(Course course)
         {
-            return await _courseRepository.UpdateCourseAsync(course);
+             await _courseRepository.UpdateCourseAsync(course);
         }
     }
 }

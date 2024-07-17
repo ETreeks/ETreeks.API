@@ -29,15 +29,33 @@ namespace ETreeks.Infra.Service
 			await _categoryRepository.DeleteCategory(id);
 		}
 
-		public async Task<List<Category>> GetAllCategories()
-		{
-			var result = await _categoryRepository.GetAllCategories();
-			var finalResult = from r in result
-							  group r by r.Id into g
-							  select new Category { Id = g.Key, Categoryname = g.First().Categoryname, Courses = g.SelectMany(x => x.Courses).ToList() };
-			return finalResult.ToList();
-		}
-		public Task<Category> GetCategoryById(int id)
+        //public async Task<List<Category>> GetAllCategories()
+        //{
+        //	var result = await _categoryRepository.GetAllCategories();
+        //	var finalResult = from r in result
+        //					  group r by r.Id into g
+        //					  select new Category
+        //					  { Id = g.Key,
+        //					  Categoryname = g.First().Categoryname,
+        //					  Courses = g.SelectMany(x => x.Courses).ToList() };
+        //	return finalResult.ToList();
+        //}
+        public async Task<List<Category>> GetAllCategories()
+        {
+            var result = await _categoryRepository.GetAllCategories();
+            var finalResult = from r in result
+                              group r by r.Id into g
+                              select new Category
+                              {
+                                  Id = g.Key,
+                                  Categoryname = g.First().Categoryname,
+                                  Imagename = g.First().Imagename, // Ensure this line exists
+                                  Courses = g.SelectMany(x => x.Courses).ToList()
+                              };
+            return finalResult.ToList();
+        }
+
+        public Task<Category> GetCategoryById(int id)
 		{
 			return _categoryRepository.GetCategoryById(id);
 		}

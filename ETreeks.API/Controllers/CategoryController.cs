@@ -76,5 +76,26 @@ namespace ETreeks.API.Controllers
 			await _categoryService.DeleteCategory(id);
 			return NoContent();
 		}
-	}
+
+
+
+		[HttpPost]
+		[Route("UploadCatImage")]
+		public Category UploadImage()
+		{
+			var file = Request.Form.Files[0];
+			var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+
+			var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks\\src\\assets\\Images", fileName);
+			using (var stream = new FileStream(fullPath, FileMode.Create))
+			{
+				file.CopyTo(stream);
+
+				Category item = new Category();
+				//item.Imagename = file.FileName;
+				item.Imagename = fileName;
+				return item;
+			}
+		}
+    }
 }
