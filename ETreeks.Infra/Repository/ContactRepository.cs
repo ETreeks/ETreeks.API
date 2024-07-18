@@ -24,7 +24,7 @@ namespace ETreeks.Infra.Repository
             _dbContext = dbContext;
         }
 
-        public async Task <int> CreateContact(Contactu contactu)
+        public async Task CreateContact(Contactu contactu)
         {
             var param = new DynamicParameters();
             param.Add("Name", contactu.Name, DbType.String, direction: ParameterDirection.Input);
@@ -32,11 +32,11 @@ namespace ETreeks.Infra.Repository
             param.Add("Subject", contactu.Subject, DbType.String, direction: ParameterDirection.Input);
             param.Add("Email1", contactu.Email1, DbType.String , direction: ParameterDirection.Input);
             param.Add("Email2", contactu.Email2, DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            //param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
             
             var result = await _dbContext.Connection.ExecuteAsync("CONTACTUS_PKG.CREATE_CONTACT", param, commandType: CommandType.StoredProcedure);
-            int contactId = param.Get<int>("C_id");
-            return contactId;
+            //int contactId = param.Get<int>("C_id");
+            //return contactId;
         }
 
         public async Task DeleteContact(int id)

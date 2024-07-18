@@ -19,9 +19,9 @@ namespace ETreeks.Infra.Service
             _contactRepository = contactRepository;
         }
 
-        public async Task<int> CreateContact(Contactu contactu)
+        public async Task CreateContact(Contactu contactu)
         {
-            return await _contactRepository.CreateContact(contactu);
+            await _contactRepository.CreateContact(contactu);
         }
   
 

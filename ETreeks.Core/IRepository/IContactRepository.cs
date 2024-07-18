@@ -10,7 +10,7 @@ namespace ETreeks.Core.IRepository
 {
     public interface IContactRepository
     {
-        Task<int> CreateContact(Contactu contactu);
+        Task CreateContact(Contactu contactu);
 
         Task UpdateContact(Contactu contactu);
 

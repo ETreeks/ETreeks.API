@@ -32,9 +32,9 @@ namespace ETreeks.API.Controllers
         }
 
         [HttpPost]
-        public async Task<int> CreateContact([FromBody] Contactu contactu)
+        public async Task CreateContact([FromBody] Contactu contactu)
         {
-            return await _contactService.CreateContact(contactu);
+             await _contactService.CreateContact(contactu);
         } 
 
         [HttpPut]

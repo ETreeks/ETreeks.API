@@ -10,7 +10,7 @@ namespace ETreeks.Core.IService
 {
     public interface IContactService
     {
-        Task<int> CreateContact(Contactu contactu);
+        Task CreateContact(Contactu contactu);
 
         Task UpdateContact(Contactu contactu);
 
