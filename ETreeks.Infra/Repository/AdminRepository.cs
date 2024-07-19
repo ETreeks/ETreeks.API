@@ -256,5 +256,13 @@ namespace ETreeks.Infra.Repository
 
             return result;
         }
+
+        public async Task AccepttesTimonial(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("testimonial_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            await _dbContext.Connection.ExecuteAsync("Admin_Package.AcceptTestimonial", param, commandType: CommandType.StoredProcedure);
+          
+        }
     }
 }

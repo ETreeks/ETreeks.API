@@ -18,9 +18,9 @@ namespace ETreeks.API.Controllers
             _studentService = studentService;
         }
         [HttpPost]
-        public async Task<int> CreateBookingRequest([FromBody] Reservation reservation)
+        public async Task CreateBookingRequest([FromBody] Reservation reservation)
         {
-            return await _studentService.CreateBookingRequest(reservation);
+             await _studentService.CreateBookingRequest(reservation);
         }
 
         [HttpGet("GetTrainerSessionsByUsername/{Username}")]

@@ -159,6 +159,14 @@ namespace ETreeks.API.Controllers
             return await _adminService.GetCountAcceptedReservation();
         }
 
+
+        [HttpPut]
+        [Route("AcceptT/{id}")]
+        public async Task AcceptTestimonial(int id)
+        {
+             await _adminService.AccepttesTimonial(id);
+        }
+
         [HttpPost("accept-profile-admin")]
         public async Task<IActionResult> AcceptProfileAdmin(int userId, string newRegistrationStatus)
         {

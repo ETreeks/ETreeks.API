@@ -722,7 +722,7 @@ namespace ETreeks.Core.Data
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.GusersId)
+                entity.Property(e => e.Gusers_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("GUSERS_ID");
 
@@ -739,7 +739,7 @@ namespace ETreeks.Core.Data
 
                 entity.HasOne(d => d.Gusers)
                     .WithMany(p => p.Testimonials)
-                    .HasForeignKey(d => d.GusersId)
+                    .HasForeignKey(d => d.Gusers_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_GUSERST");
             });

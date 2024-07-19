@@ -46,5 +46,8 @@ namespace ETreeks.Core.IService
         Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto);
 
 
+        Task AccepttesTimonial(int id);
+
+
     }
 }

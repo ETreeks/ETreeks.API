@@ -32,10 +32,9 @@ namespace ETreeks.API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTestimonial(int id)
+        public async Task DeleteTestimonial(int id)
         {
-            var result = await _testimonialService.DeleteTestimonial(id);
-            return Ok(result);
+             await _testimonialService.DeleteTestimonial(id);
         }
 
         [HttpGet]

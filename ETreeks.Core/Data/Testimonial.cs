@@ -8,7 +8,7 @@ namespace ETreeks.Core.Data
         public decimal Id { get; set; }
         public string? Testimonialstext { get; set; }
         public string? Testimonialsstatus { get; set; }
-        public decimal? GusersId { get; set; }
+        public decimal? Gusers_Id { get; set; }
 
         public virtual Guser? Gusers { get; set; }
     }

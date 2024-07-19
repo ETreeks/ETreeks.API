@@ -10,7 +10,7 @@ namespace ETreeks.Core.IService
 {
     public interface IStudentService
     {
-        Task<int> CreateBookingRequest(Reservation reservation);
+        Task CreateBookingRequest(Reservation reservation);
 
         List<SessionDTO> GetTrainerSessionsByUsername(string username);
         List<SessionDTO> GetTrainerSessionsByID(int trainerId);

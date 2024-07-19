@@ -43,5 +43,8 @@ namespace ETreeks.Core.IRepository
         Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto);
 
 
+        Task AccepttesTimonial(int id);
+
+
     }
 }

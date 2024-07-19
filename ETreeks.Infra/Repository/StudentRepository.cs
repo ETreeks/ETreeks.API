@@ -21,17 +21,18 @@ namespace ETreeks.Infra.Repository
             _dbContext = dbContext;
         }
 
-        public async Task<int> CreateBookingRequest(Reservation reservation)
+        public async Task CreateBookingRequest(Reservation reservation)
         {
             var param = new DynamicParameters();
             param.Add("GUsers_ID", reservation.Gusers_Id, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("Course_ID", reservation.Course_Id, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            //param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 			//:)
-            var result = await _dbContext.Connection.ExecuteAsync("Booking_Package.CreateBookingRequest", param, commandType: CommandType.StoredProcedure);
+            //var result = 
+				await _dbContext.Connection.ExecuteAsync("STUDENT_PACKAGE.CreateBookingRequest", param, commandType: CommandType.StoredProcedure);
 
-            int courseid = param.Get<int>("C_id");
-            return courseid;
+            //int courseid = param.Get<int>("C_id");
+            //return courseid;
         }
         public List<SessionDTO> GetTrainerSessionsByID(int trainerId)
         {

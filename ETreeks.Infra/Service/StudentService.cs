@@ -19,9 +19,9 @@ namespace ETreeks.Infra.Service
             _studentRepository = studentRepository;
         }
 
-        public async Task<int> CreateBookingRequest(Reservation reservation)
+        public async Task CreateBookingRequest(Reservation reservation)
         {
-            return await _studentRepository.CreateBookingRequest(reservation);
+             await _studentRepository.CreateBookingRequest(reservation);
         }
         public List<SessionDTO> GetTrainerSessionsByID(int trainerId)
         {

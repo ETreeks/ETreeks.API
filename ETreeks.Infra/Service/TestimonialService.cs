@@ -28,9 +28,9 @@ namespace ETreeks.Infra.Service
             return await _testimonialRepository.UpdateTestimonial(testimonial);
         }
 
-        public async Task<int> DeleteTestimonial(int testimonialId)
+        public async Task DeleteTestimonial(int testimonialId)
         {
-            return await _testimonialRepository.DeleteTestimonial(testimonialId);
+            await _testimonialRepository.DeleteTestimonial(testimonialId);
         }
 
         public async Task<List<Testimonial>> GetAllTestimonials()

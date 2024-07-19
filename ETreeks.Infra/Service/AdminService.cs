@@ -149,5 +149,10 @@ namespace ETreeks.Infra.Service
         {
             return await _adminRepository.GetCountAcceptedReservation();
         }
+
+        public async Task AccepttesTimonial(int id)
+        {
+            await _adminRepository.AccepttesTimonial(id);
+        }
     }
 }
