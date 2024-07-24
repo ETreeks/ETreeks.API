@@ -264,5 +264,12 @@ namespace ETreeks.Infra.Repository
             await _dbContext.Connection.ExecuteAsync("Admin_Package.AcceptTestimonial", param, commandType: CommandType.StoredProcedure);
           
         }
+
+        public async Task AccepttesCourse(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("course_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            await _dbContext.Connection.ExecuteAsync("Admin_Package.AcceptCourse", param, commandType: CommandType.StoredProcedure);
+        }
     }
 }

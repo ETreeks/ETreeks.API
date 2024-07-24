@@ -86,7 +86,7 @@ namespace ETreeks.API.Controllers
 			var file = Request.Form.Files[0];
 			var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
 
-			var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks\\src\\assets\\Images", fileName);
+			var fullPath = Path.Combine("C:\\Users\\Lenovo\\Desktop\\ETreeks_Angular10\\ETreeks\\src\\assets\\Images", fileName);
 			using (var stream = new FileStream(fullPath, FileMode.Create))
 			{
 				file.CopyTo(stream);

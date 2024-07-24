@@ -10,7 +10,7 @@ namespace ETreeks.Core.IService
 {
     public interface ITrainerService
     {
-        List<TrainerSearch> Search(DateTime startDate, DateTime endDate);
+        List<TrainerSearch> Search(DateTime startDate, DateTime endDate , int trainerId);
 
         Task AcceptReservationAsync(int reservationId);
         Task RejectReservationAsync(int reservationId);

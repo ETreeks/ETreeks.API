@@ -22,14 +22,24 @@ namespace ETreeks.Infra.Repository
         }
 
 
-        public List<TrainerSearch> Search(DateTime startDate, DateTime endDate)
+        //public List<TrainerSearch> Search(DateTime startDate, DateTime endDate)
+        //{
+        //    var p = new DynamicParameters();
+        //    p.Add("DateFrom", startDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+        //    p.Add("DateTo", endDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
+        //    var result = _dbContext.Connection.Query<TrainerSearch>("Trainer_Package.GetReservationsInfoByInterval", p, commandType: CommandType.StoredProcedure);
+        //    return result.ToList();
+        //}
+        public List<TrainerSearch> Search(DateTime startDate, DateTime endDate, int trainerId)
         {
             var p = new DynamicParameters();
             p.Add("DateFrom", startDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
             p.Add("DateTo", endDate, dbType: DbType.DateTime, direction: ParameterDirection.Input);
-            var result = _dbContext.Connection.Query<TrainerSearch>("Trainer_Package.GetReservationsInfoByInterval", p, commandType: CommandType.StoredProcedure);
+            p.Add("TrainerId", trainerId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            var result = _dbContext.Connection.Query<TrainerSearch>("Trainer_Package.GetInfoByInterval", p, commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
+
         public async Task AcceptReservationAsync(int reservationId)
         {
             var param = new DynamicParameters();

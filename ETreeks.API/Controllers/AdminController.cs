@@ -167,6 +167,13 @@ namespace ETreeks.API.Controllers
              await _adminService.AccepttesTimonial(id);
         }
 
+        [HttpPut]
+        [Route("AcceptC/{id}")]
+        public async Task AccepttesCourse(int id)
+        {
+            await _adminService.AccepttesCourse(id);
+        }
+
         [HttpPost("accept-profile-admin")]
         public async Task<IActionResult> AcceptProfileAdmin(int userId, string newRegistrationStatus)
         {

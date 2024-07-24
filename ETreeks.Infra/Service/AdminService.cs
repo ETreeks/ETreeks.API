@@ -154,5 +154,10 @@ namespace ETreeks.Infra.Service
         {
             await _adminRepository.AccepttesTimonial(id);
         }
+
+        public async Task AccepttesCourse(int id)
+        {
+            await _adminRepository.AccepttesCourse(id);
+        }
     }
 }

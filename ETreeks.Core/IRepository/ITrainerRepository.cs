@@ -10,7 +10,7 @@ namespace ETreeks.Core.IRepository
 {
     public interface ITrainerRepository
     {
-        List<TrainerSearch> Search(DateTime startDate, DateTime endDate);
+        List<TrainerSearch> Search(DateTime startDate, DateTime endDate, int trainerId);
 
         Task AcceptReservationAsync(int reservationId);
         Task RejectReservationAsync(int reservationId);

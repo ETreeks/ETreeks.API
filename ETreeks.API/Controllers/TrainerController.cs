@@ -19,10 +19,10 @@ namespace ETreeks.API.Controllers
         }
 
         [HttpGet]
-        [Route("Search/{startDate}/{endDate}")]
-        public List<TrainerSearch> Search(DateTime startDate, DateTime endDate)
+        [Route("Search/{startDate}/{endDate}/{trainerId}")]
+        public List<TrainerSearch> Search(DateTime startDate, DateTime endDate, int trainerId)
         {
-            return _trainerService.Search(startDate, endDate);
+            return _trainerService.Search(startDate, endDate, trainerId);
         }
         [HttpPost("accept/{id}")]
         public async Task<IActionResult> AcceptReservation(int id)

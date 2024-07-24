@@ -45,6 +45,8 @@ namespace ETreeks.Core.IRepository
 
         Task AccepttesTimonial(int id);
 
+        Task AccepttesCourse(int id);
+
 
     }
 }

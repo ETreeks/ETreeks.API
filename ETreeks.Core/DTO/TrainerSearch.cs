@@ -10,7 +10,7 @@ namespace ETreeks.Core.DTO
     {
         public string? FullName { get; set; }
 
-        public string? CoueseName { get; set; }
+        public string? courseName { get; set; }
         public string? categoryname { get; set; }
 
         public DateTime? reservationdate { get; set; }

@@ -20,10 +20,10 @@ namespace ETreeks.Infra.Service
             _trainerRepository = trainerRepository;
         }
 
-        public  List<TrainerSearch> Search(DateTime startDate, DateTime endDate)
+        public  List<TrainerSearch> Search(DateTime startDate, DateTime endDate ,int trainerId)
         {
             
-                return _trainerRepository.Search(startDate, endDate);
+                return _trainerRepository.Search(startDate, endDate, trainerId);
             
         }
         public async Task AcceptReservationAsync(int reservationId)
