@@ -637,11 +637,11 @@ namespace ETreeks.Core.Data
                     .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
-                entity.Property(e => e.CourseId)
+                entity.Property(e => e.Course_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("COURSE_ID");
 
-                entity.Property(e => e.GuserId)
+                entity.Property(e => e.Guser_Id)
                     .HasColumnType("NUMBER")
                     .HasColumnName("GUSER_ID");
 
@@ -657,13 +657,13 @@ namespace ETreeks.Core.Data
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.CourseId)
+                    .HasForeignKey(d => d.Course_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_COURSE_ID");
 
                 entity.HasOne(d => d.Guser)
                     .WithMany(p => p.Reviews)
-                    .HasForeignKey(d => d.GuserId)
+                    .HasForeignKey(d => d.Guser_Id)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_GUSER_ID");
             });

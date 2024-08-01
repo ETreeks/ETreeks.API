@@ -24,8 +24,8 @@ namespace ETreeks.Infra.Repository
         {
             var param = new DynamicParameters();
             param.Add("review_message", review.Message, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("guser_id", review.GuserId, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            param.Add("course_id", review.CourseId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("guser_id", review.Guser_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("course_id", review.Course_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("review_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("Review_Package.CreateReview", param, commandType: CommandType.StoredProcedure);
