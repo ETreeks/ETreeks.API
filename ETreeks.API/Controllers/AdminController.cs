@@ -22,6 +22,12 @@ namespace ETreeks.API.Controllers
         {
             _adminService = adminService;
         }
+        [HttpGet]
+        [Route("GetAllReservation")]
+        public async Task<List<ReservationDate>> GetAllReservation()
+        {
+            return await _adminService.GetAllReservation();
+        }
 
         [HttpDelete("{id}")]
         public async Task<int> DeleteUser(int id)

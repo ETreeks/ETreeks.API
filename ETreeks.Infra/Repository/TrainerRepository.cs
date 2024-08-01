@@ -39,6 +39,14 @@ namespace ETreeks.Infra.Repository
             var result = _dbContext.Connection.Query<TrainerSearch>("Trainer_Package.GetInfoByInterval", p, commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
+        public async Task<List<ReservationDate>> GetAllReservationT(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("TrainerId", id, DbType.Int32, ParameterDirection.Input);
+            var result = await _dbContext.Connection.QueryAsync<ReservationDate>("Trainer_Package.GetAllReservationT", param, commandType: CommandType.StoredProcedure);
+            //var result = await _dbContext.Connection.QueryAsync<ReservationDate>("TRAINER_PACKAGE.GetAllReservationT", commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
 
         public async Task AcceptReservationAsync(int reservationId)
         {

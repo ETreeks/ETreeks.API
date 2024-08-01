@@ -34,6 +34,21 @@ namespace ETreeks.Infra.Repository
             //int courseid = param.Get<int>("C_id");
             //return courseid;
         }
+        public async Task<List<Notification>> GetNotificationsForUser(int userId)
+        {
+            var p = new DynamicParameters();
+            p.Add("p_user_id", userId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            var result = _dbContext.Connection.Query<Notification>("STUDENT_PACKAGE.GET_NOTIFICATIONS_FOR_USER", p, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
+        public async Task DeleteNotification(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("Nid", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            await _dbContext.Connection.ExecuteAsync("STUDENT_PACKAGE.DeleteNotification", param, commandType: CommandType.StoredProcedure);
+
+        }
         public List<SessionDTO> GetTrainerSessionsByID(int trainerId)
         {
             var p = new DynamicParameters();

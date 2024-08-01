@@ -11,7 +11,8 @@ namespace ETreeks.Core.IRepository
     public interface IStudentRepository
     {
         Task CreateBookingRequest(Reservation reservation);
-
+        Task<List<Notification>> GetNotificationsForUser(int userId);
+        Task DeleteNotification(int id);
         List<SessionDTO> GetTrainerSessionsByUsername(string username);
         List<SessionDTO> GetTrainerSessionsByID(int trainerId);
 

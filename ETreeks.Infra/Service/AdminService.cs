@@ -21,7 +21,10 @@ namespace ETreeks.Infra.Service
         {
             _adminRepository = adminRepository;
         }
-
+        public async Task<List<ReservationDate>> GetAllReservation()
+        {
+            return await _adminRepository.GetAllReservation();
+        }
         public async Task<int> DeleteUser(int id)
         {
             return await _adminRepository.DeleteUser(id);

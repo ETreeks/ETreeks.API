@@ -11,6 +11,7 @@ namespace ETreeks.Core.IRepository
     public interface ITrainerRepository
     {
         List<TrainerSearch> Search(DateTime startDate, DateTime endDate, int trainerId);
+        Task<List<ReservationDate>> GetAllReservationT(int id);
 
         Task AcceptReservationAsync(int reservationId);
         Task RejectReservationAsync(int reservationId);

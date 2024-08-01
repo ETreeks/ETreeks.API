@@ -1,3 +1,4 @@
+using ETreeks.API.Hubs;
 using ETreeks.Core.ICommon;
 using ETreeks.Core.IRepository;
 using ETreeks.Core.IService;
@@ -75,13 +76,24 @@ namespace ETreeks.API
 			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
 
 
-            builder.Services.AddCors(corsOptions =>
+            //builder.Services.AddCors(corsOptions =>
+            //{
+            //    corsOptions.AddPolicy("policy",
+            //    builder =>
+            //    {
+            //        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+            //    });
+            //});
+            builder.Services.AddCors(options =>
             {
-                corsOptions.AddPolicy("policy",
-                builder =>
-                {
-                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-                });
+                options.AddPolicy("AllowSpecificOrigins",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:4200") 
+                               .AllowAnyHeader()
+                               .AllowAnyMethod()
+                               .AllowCredentials();
+                    });
             });
 
             builder.Services.AddAuthentication(x =>
@@ -100,6 +112,15 @@ namespace ETreeks.API
                 ClockSkew = TimeSpan.Zero
             }); ;
 
+
+            // builder.Services.AddSignalR();
+            builder.Services.AddSignalR(options =>
+            {
+                options.KeepAliveInterval = TimeSpan.FromSeconds(10);
+                options.ClientTimeoutInterval = TimeSpan.FromSeconds(30);
+            });
+
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -112,12 +133,21 @@ namespace ETreeks.API
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseRouting(); // Add UseRouting before UseEndpoints
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
 
-            app.UseCors("policy");
+            //app.UseCors("policy");
+            //app.MapControllers();
+            app.UseCors("AllowSpecificOrigins");
             app.MapControllers();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+            });
 
             app.Run();
         }

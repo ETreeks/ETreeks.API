@@ -23,6 +23,17 @@ namespace ETreeks.Infra.Service
         {
              await _studentRepository.CreateBookingRequest(reservation);
         }
+        public async Task<List<Notification>> GetNotificationsForUser(int userId)
+        {
+
+            return await _studentRepository.GetNotificationsForUser(userId);
+        }
+
+        public async Task DeleteNotification(int id)
+        {
+            await _studentRepository.DeleteNotification(id);
+        }
+
         public List<SessionDTO> GetTrainerSessionsByID(int trainerId)
         {
             return _studentRepository.GetTrainerSessionsByID(trainerId);

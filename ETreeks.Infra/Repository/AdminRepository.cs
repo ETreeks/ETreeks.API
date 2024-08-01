@@ -21,7 +21,11 @@ namespace ETreeks.Infra.Repository
         {
             _dbContext = dbContext;
         }
-
+        public async Task<List<ReservationDate>> GetAllReservation()
+        {
+            var result = await _dbContext.Connection.QueryAsync<ReservationDate>("Admin_Package.GetAllReservation", commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
         public async Task<int> DeleteUser(int id)
         {
             var param = new DynamicParameters();

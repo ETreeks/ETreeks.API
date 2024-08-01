@@ -24,6 +24,12 @@ namespace ETreeks.API.Controllers
         {
             return _trainerService.Search(startDate, endDate, trainerId);
         }
+        [HttpGet]
+        [Route("GetAllReservationT/{id}")]
+        public async Task<List<ReservationDate>> GetAllReservationT(int id)
+        {
+            return await _trainerService.GetAllReservationT(id);
+        }
         [HttpPost("accept/{id}")]
         public async Task<IActionResult> AcceptReservation(int id)
         {

@@ -11,6 +11,8 @@ namespace ETreeks.Core.IService
 {
     public interface IAdminService
     {
+        Task<List<ReservationDate>> GetAllReservation();
+
         Task<List<Guser>> GetAllPendingTrainer();
         //Task<List<Guser>> DisplayAllStudents();
         Task<List<StudentInfo>> DisplayAllStudents();
