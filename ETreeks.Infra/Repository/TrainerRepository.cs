@@ -48,6 +48,15 @@ namespace ETreeks.Infra.Repository
             return result.ToList();
         }
 
+
+        public async Task<Reservation> GetReservationByIdAsync(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("Reservation_ID", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            var result = await _dbContext.Connection.QueryAsync<Reservation>("Reservation_Pkg.GET_RESERVATION_BY_ID", param, commandType: CommandType.StoredProcedure);
+            return result.FirstOrDefault();
+        }
+
         public async Task AcceptReservationAsync(int reservationId)
         {
             var param = new DynamicParameters();
@@ -120,5 +129,6 @@ namespace ETreeks.Infra.Repository
 				return true;
 			}
 		}
-	}
+
+    }
 }

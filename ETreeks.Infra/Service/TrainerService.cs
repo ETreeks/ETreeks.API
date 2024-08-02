@@ -30,6 +30,10 @@ namespace ETreeks.Infra.Service
         {
             return await _trainerRepository.GetAllReservationT(id);
         }
+        public async Task<Reservation> GetReservationByIdAsync(int id)
+        { 
+            return await _trainerRepository.GetReservationByIdAsync(id);
+        }
         public async Task AcceptReservationAsync(int reservationId)
         {
             await _trainerRepository.AcceptReservationAsync(reservationId);
@@ -54,5 +58,7 @@ namespace ETreeks.Infra.Service
 		{
 			return await _trainerRepository.UpdateProfile(profileTrainerDto);
 		}
-	}
+
+     
+    }
 }

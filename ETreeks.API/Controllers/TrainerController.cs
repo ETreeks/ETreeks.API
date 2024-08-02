@@ -1,9 +1,11 @@
-﻿using ETreeks.Core.Data;
+﻿using ETreeks.API.Hubs;
+using ETreeks.Core.Data;
 using ETreeks.Core.DTO;
 using ETreeks.Core.IService;
 using ETreeks.Infra.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace ETreeks.API.Controllers
 {
@@ -12,10 +14,12 @@ namespace ETreeks.API.Controllers
     public class TrainerController : ControllerBase
     {
         private ITrainerService _trainerService;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public TrainerController(ITrainerService trainerService)
+        public TrainerController(ITrainerService trainerService, IHubContext<NotificationHub> hubContext)
         {
             _trainerService = trainerService;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -33,9 +37,30 @@ namespace ETreeks.API.Controllers
         [HttpPost("accept/{id}")]
         public async Task<IActionResult> AcceptReservation(int id)
         {
+            //await _trainerService.AcceptReservationAsync(id);
+            //return Ok("Accepted");
+
+            // Retrieve the reservation using the provided ID
+            var reservation = await _trainerService.GetReservationByIdAsync(id);
+
+            if (reservation == null)
+            {
+                return NotFound("Reservation not found");
+            }
+
+            // Accept the reservation
             await _trainerService.AcceptReservationAsync(id);
+
+            // Notify the user
+            var userId = reservation.Gusers_Id.ToString();
+            var message = "Your reservation has been accepted.";
+            await _hubContext.Clients.Group(userId).SendAsync("ReceiveNotification", message);
+            Console.WriteLine($"Notification sent to user {userId}: {message}");
+
             return Ok("Accepted");
         }
+
+    
 
         [HttpPost("reject/{id}")]
         public async Task<IActionResult> RejectReservation(int id)
