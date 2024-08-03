@@ -275,5 +275,19 @@ namespace ETreeks.Infra.Repository
             param.Add("course_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             await _dbContext.Connection.ExecuteAsync("Admin_Package.AcceptCourse", param, commandType: CommandType.StoredProcedure);
         }
+
+
+        public List<Guser> SearchTrainerByName(string trainerName)
+        {
+            string query = "ADMIN_PACKAGE.SEARCH_FOR_TRAINER_NAME";
+
+            var parameters = new DynamicParameters();
+            parameters.Add("Trainer_Name", trainerName, DbType.String, ParameterDirection.Input);
+
+            using (var multi = _dbContext.Connection.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
+            {
+                return multi.Read<Guser>().ToList();
+            }
+        }
     }
 }

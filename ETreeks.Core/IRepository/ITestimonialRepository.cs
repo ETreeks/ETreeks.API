@@ -14,5 +14,6 @@ namespace ETreeks.Core.IRepository
         Task DeleteTestimonial(int testimonialId);
         Task<List<Testimonial>> GetAllTestimonials();
         Task<Testimonial> GetTestimonialById(int testimonialId);
+
     }
 }

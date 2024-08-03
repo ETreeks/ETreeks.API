@@ -51,6 +51,6 @@ namespace ETreeks.Core.IService
         Task AccepttesTimonial(int id);
         Task AccepttesCourse(int id);
 
-
+        List<Guser> SearchTrainerByName(string trainerName);
     }
 }

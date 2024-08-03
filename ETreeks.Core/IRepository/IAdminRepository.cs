@@ -48,6 +48,6 @@ namespace ETreeks.Core.IRepository
 
         Task AccepttesCourse(int id);
 
-
+        List<Guser> SearchTrainerByName(string trainerName);
     }
 }

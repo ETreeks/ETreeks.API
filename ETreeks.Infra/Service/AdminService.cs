@@ -162,5 +162,10 @@ namespace ETreeks.Infra.Service
         {
             await _adminRepository.AccepttesCourse(id);
         }
+
+        public List<Guser> SearchTrainerByName(string trainerName)
+        {
+            return _adminRepository.SearchTrainerByName(trainerName);
+        }
     }
 }

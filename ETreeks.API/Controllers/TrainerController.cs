@@ -76,26 +76,50 @@ namespace ETreeks.API.Controllers
         {
             return await _trainerService.GetAllPendingReservation();
         }
-		[HttpGet("{id}")]
-		public async Task<IActionResult> ViewProfile(int id)
-		{
-			var profile = await _trainerService.ViewProfile(id);
-			if (profile == null)
-			{
-				return NotFound();
-			}
-			return Ok(profile);
-		}
+		//[HttpGet("{id}")]
+		//public async Task<IActionResult> ViewProfile(int id)
+		//{
+		//	var profile = await _trainerService.ViewProfile(id);
+		//	if (profile == null)
+		//	{
+		//		return NotFound();
+		//	}
+		//	return Ok(profile);
+		//}
 
-		[HttpPut]
-		public async Task<IActionResult> UpdateProfile([FromBody] ProfileTrainerDTO profileTrainerDto)
-		{
-			var result = await _trainerService.UpdateProfile(profileTrainerDto);
-			if (result)
-			{
-				return NoContent();
-			}
-			return BadRequest();
-		}
-	}
+		//[HttpPut]
+		//public async Task<IActionResult> UpdateProfile([FromBody] ProfileTrainerDTO profileTrainerDto)
+		//{
+		//	var result = await _trainerService.UpdateProfile(profileTrainerDto);
+		//	if (result)
+		//	{
+		//		return NoContent();
+		//	}
+		//	return BadRequest();
+		//}
+
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ViewProfile(int id)
+        {
+            var profile = await _trainerService.ViewProfile(id);
+            if (profile == null)
+            {
+                return NotFound();
+            }
+            return Ok(profile);
+        }
+
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProfile([FromBody] ProfileTrainerDTO profileTrainerDto)
+        {
+            var result = await _trainerService.UpdateProfile(profileTrainerDto);
+            if (result)
+            {
+                return NoContent();
+            }
+            return BadRequest();
+        }
+    }
 }

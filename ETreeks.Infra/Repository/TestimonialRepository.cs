@@ -20,30 +20,47 @@ namespace ETreeks.Infra.Repository
             _dbContext = dbContext;
         }
 
+        //public async Task<int> CreateTestimonial(Testimonial testimonial)
+        //{
+        //    var param = new DynamicParameters();
+        //    param.Add("testimonial_text", testimonial.Testimonialstext, dbType: DbType.String, direction: ParameterDirection.Input);
+        //    param.Add("gusers_id", testimonial.Gusers_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+        //    param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+        //    var result = await _dbContext.Connection.ExecuteAsync("Testimonial_Package.CreateTestimonial", param, commandType: CommandType.StoredProcedure);
+        //    int TID = param.Get<int>("C_id");
+        //    return TID;
+        //}
         public async Task<int> CreateTestimonial(Testimonial testimonial)
         {
             var param = new DynamicParameters();
             param.Add("testimonial_text", testimonial.Testimonialstext, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("gusers_id", testimonial.Gusers_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            param.Add("gusers_id", testimonial.Gusers_Id, dbType: DbType.Decimal, direction: ParameterDirection.Input); // Changed to DbType.Decimal
 
             var result = await _dbContext.Connection.ExecuteAsync("Testimonial_Package.CreateTestimonial", param, commandType: CommandType.StoredProcedure);
-            int TID = param.Get<int>("C_id");
-            return TID;
+            return result;
         }
 
+        ////public async Task<int> UpdateTestimonial(Testimonial testimonial)
+        ////{
+        ////    var param = new DynamicParameters();
+        ////    param.Add("testimonial_id", testimonial.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+        ////    param.Add("new_testimonial_text", testimonial.Testimonialstext, dbType: DbType.String, direction: ParameterDirection.Input);
+        ////    param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+
+        ////    var result = await _dbContext.Connection.ExecuteAsync("Testimonial_Package.UpdateTestimonial", param, commandType: CommandType.StoredProcedure);
+        ////    int TID = param.Get<int>("C_id");
+        ////    return TID;
+        ////}
         public async Task<int> UpdateTestimonial(Testimonial testimonial)
         {
             var param = new DynamicParameters();
             param.Add("testimonial_id", testimonial.Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("new_testimonial_text", testimonial.Testimonialstext, dbType: DbType.String, direction: ParameterDirection.Input);
-            param.Add("C_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
             var result = await _dbContext.Connection.ExecuteAsync("Testimonial_Package.UpdateTestimonial", param, commandType: CommandType.StoredProcedure);
-            int TID = param.Get<int>("C_id");
-            return TID;
+            return result;
         }
-
         public async Task DeleteTestimonial(int id)
         {
             var param = new DynamicParameters();
@@ -54,6 +71,8 @@ namespace ETreeks.Infra.Repository
             //int TID = param.Get<int>("C_id");
             //return TID;
         }
+
+
 
         public async Task<List<Testimonial>> GetAllTestimonials()
         {

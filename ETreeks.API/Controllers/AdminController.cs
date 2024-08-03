@@ -219,6 +219,16 @@ namespace ETreeks.API.Controllers
             return Ok();
         }
 
+        [HttpGet("SearchTrainerByName")]
+        public IActionResult SearchTrainerByName(string trainerName)
+        {
+            var trainers = _adminService.SearchTrainerByName(trainerName);
+            if (trainers == null || trainers.Count == 0)
+            {
+                return NotFound("No trainers found with the specified name.");
+            }
+            return Ok(trainers);
+        }
 
     }
 }
