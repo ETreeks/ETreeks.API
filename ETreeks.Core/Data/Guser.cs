@@ -30,7 +30,7 @@ namespace ETreeks.Core.Data
         public string? Gender { get; set; }
         public decimal? Phone { get; set; }
         public string? BioTrainer { get; set; }
-        public string? RegistrationStatusTrainer { get; set; }
+        public string? Registration_Status_Trainer { get; set; }
         public decimal? Role_Id { get; set; }
         public decimal? AddressId { get; set; }
 

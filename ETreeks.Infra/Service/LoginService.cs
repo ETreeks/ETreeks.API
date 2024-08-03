@@ -24,7 +24,15 @@ namespace ETreeks.Infra.Service
         {
             var result = _loginRepository.Guser(guser);
 
+
             if (result == null) { return null; }
+
+
+            else if (result.Role_Id == 2 && result.Registration_Status_Trainer == "Pending" )
+            {
+                return "Your registration is pending. Please wait for approval.";
+            }
+
             else
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes

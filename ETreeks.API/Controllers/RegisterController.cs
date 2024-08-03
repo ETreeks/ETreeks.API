@@ -58,7 +58,7 @@ namespace ETreeks.API.Controllers
             {
                 file.CopyTo(stream);
 
-                Guser item = new Guser();
+            Guser item = new Guser();
                 //item.Imagename = file.FileName;
                 item.Imagename = fileName;
                 return item;

@@ -403,7 +403,7 @@ namespace ETreeks.Core.Data
                     .HasColumnType("NUMBER")
                     .HasColumnName("PHONE");
 
-                entity.Property(e => e.RegistrationStatusTrainer)
+                entity.Property(e => e.Registration_Status_Trainer)
                     .HasMaxLength(8)
                     .IsUnicode(false)
                     .HasColumnName("REGISTRATION_STATUS_TRAINER")
