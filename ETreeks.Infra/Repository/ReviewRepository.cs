@@ -26,11 +26,11 @@ namespace ETreeks.Infra.Repository
             param.Add("review_message", review.Message, dbType: DbType.String, direction: ParameterDirection.Input);
             param.Add("guser_id", review.Guser_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             param.Add("course_id", review.Course_Id, dbType: DbType.Int32, direction: ParameterDirection.Input);
-            param.Add("review_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            //param.Add("review_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
 
-            var result = await _dbContext.Connection.ExecuteAsync("Review_Package.CreateReview", param, commandType: CommandType.StoredProcedure);
-            int RID = param.Get<int>("review_id");
-            return RID;
+            var result =  await _dbContext.Connection.ExecuteAsync("Review_Package.CreateReview", param, commandType: CommandType.StoredProcedure);
+            //int RID = param.Get<int>("review_id");
+            return 1;
         }
 
         public async Task<int> UpdateReview(Review review)
