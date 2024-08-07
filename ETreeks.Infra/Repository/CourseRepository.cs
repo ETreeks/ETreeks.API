@@ -57,7 +57,7 @@ namespace ETreeks.Infra.Repository
         public async Task<Course> GetCourseByIdAsync(int courseId)
         {
             var param = new DynamicParameters();
-            param.Add("C_CourseID", courseId, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            param.Add("course_id", courseId, dbType: DbType.Int32, direction: ParameterDirection.Input);
             var result = await _dbContext.Connection.QueryAsync<Course>("COURSE_PACKAGE.GetCourseById", param, commandType: CommandType.StoredProcedure);
             return result.FirstOrDefault();
         }
