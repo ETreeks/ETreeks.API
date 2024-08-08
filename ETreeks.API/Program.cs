@@ -75,6 +75,9 @@ namespace ETreeks.API
 			builder.Services.AddScoped<ICourseSessionRepository, CourseSessionRepository>();
 			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
 
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+
 
             //builder.Services.AddCors(corsOptions =>
             //{
