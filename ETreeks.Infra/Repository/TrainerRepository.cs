@@ -200,5 +200,22 @@ namespace ETreeks.Infra.Repository
                 return true;
             }
         }
+
+        public async Task CompletedCourse(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("reservation_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
+            await _dbContext.Connection.ExecuteAsync("TRAINER_PACKAGE.CompletedCourse", param, commandType: CommandType.StoredProcedure);
+
+        }
+
+        public async Task<List<Reservation>> GetAllReservationT2(int id)
+        {
+            var param = new DynamicParameters();
+            param.Add("TrainerId", id, DbType.Int32, ParameterDirection.Input);
+            var result = await _dbContext.Connection.QueryAsync<Reservation>("Trainer_Package.GetAllReservationT2", param, commandType: CommandType.StoredProcedure);
+            return result.ToList();
+        }
+
     }
 }

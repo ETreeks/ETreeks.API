@@ -21,5 +21,9 @@ namespace ETreeks.Core.IRepository
 
 		Task<ProfileTrainerDTO> ViewProfile(int id);
 		Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto);
-	}
+
+
+        Task CompletedCourse(int id);
+        Task<List<Reservation>> GetAllReservationT2(int id);
+    }
 }
