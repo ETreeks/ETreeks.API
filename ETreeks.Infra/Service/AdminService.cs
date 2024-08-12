@@ -1,10 +1,14 @@
-﻿using ETreeks.Core.Data;
+﻿using Dapper;
+using ETreeks.API.Helper;
+using ETreeks.Core.Data;
 using ETreeks.Core.DTO;
+using ETreeks.Core.ICommon;
 using ETreeks.Core.IRepository;
 using ETreeks.Core.IService;
 using ETreeks.Infra.Repository;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.DirectoryServices;
 using System.Linq;
 using System.Text;
@@ -15,17 +19,26 @@ namespace ETreeks.Infra.Service
     public class AdminService : IAdminService
     {
 
-        private readonly IAdminRepository _adminRepository;
+		private readonly IAdminRepository _adminRepository;
+		private readonly IEmailService _emailService;
 
-        public AdminService(IAdminRepository adminRepository)
-        {
-            _adminRepository = adminRepository;
-        }
-        public async Task<List<ReservationDate>> GetAllReservation()
+		public AdminService(IAdminRepository adminRepository, IEmailService emailService)
+		{
+			_adminRepository = adminRepository;
+			_emailService = emailService;
+
+		}
+		public async Task<List<ReservationDate>> GetAllReservation()
         {
             return await _adminRepository.GetAllReservation();
         }
-        public async Task<int> DeleteUser(int id)
+
+		public async Task<int> GetCountAcceptedTrainers()
+		{
+			return await _adminRepository.GetCountAcceptedTrainers();
+		}
+
+		public async Task<int> DeleteUser(int id)
         {
             return await _adminRepository.DeleteUser(id);
         }
@@ -44,18 +57,16 @@ namespace ETreeks.Infra.Service
 
             return await _adminRepository.DisplayAllUsers();
         }
+		
 
-        public async Task<List<Guser>> GetAllPendingTrainer()
-        {
-            return await _adminRepository.GetAllPendingTrainer();
-        }
 
-        public async Task<int> GetCountAcceptedTrainers()
-        {
-            return await _adminRepository.GetCountAcceptedTrainers();
-        }
+		public async Task<List<PendingTrainerDTO>> GetAllPendingTrainer()
+		{
+			return await _adminRepository.GetAllPendingTrainer();
+		}
 
-        public async Task<int> GetCountAdmin()
+
+		public async Task<int> GetCountAdmin()
         {
             return await _adminRepository.GetCountAdmin();
         }
@@ -167,5 +178,76 @@ namespace ETreeks.Infra.Service
         {
             return _adminRepository.SearchTrainerByName(trainerName);
         }
-    }
+
+
+		//public async Task<int> ApproveTrainer(int trainerId)
+		//{
+		//	var result = await _adminRepository.ApproveTrainer(trainerId);
+
+		//		var trainerEmail = await _adminRepository.GetTrainerEmail(trainerId);
+		//		await SendApprovalEmail(trainerEmail);
+
+		//	return result;
+		//}
+		public async Task<int> ApproveTrainer(int trainerId)
+		{
+			int result = await _adminRepository.ApproveTrainer(trainerId);
+
+			if (result < 0) // Assuming result > 0 indicates success
+			{
+				string trainerEmail = await _adminRepository.GetTrainerEmail(trainerId);
+
+				var mailRequest = new MailRequest
+				{
+					TOEmail = trainerEmail,
+					Subject = "Your Trainer Application is Approved!",
+					Body = "Congratulations! Your application to be a trainer has been approved. You can now log in and start managing your sessions."
+				};
+
+				try
+				{
+					await _emailService.SendEmailAsync(mailRequest);
+					// Log email sent success (use a logging framework for production)
+					Console.WriteLine("Email sent successfully.");
+				}
+				catch (Exception ex)
+				{
+					// Log email sending failure (use a logging framework for production)
+					Console.WriteLine($"Failed to send email: {ex.Message}");
+				}
+			}
+			else
+			{
+				// Log if no rows were updated (use a logging framework for production)
+				Console.WriteLine("No rows were updated. Email not sent.");
+			}
+
+			return result;
+		}
+
+
+
+		public async Task SendApprovalEmail(string email)
+		{
+			var mailRequest = new MailRequest
+			{
+				TOEmail = email,
+				Subject = "Trainer Approval Notification",
+				Body = "Congratulations! You have been approved as a trainer. You can now log in to your account."
+			};
+			await _emailService.SendEmailAsync(mailRequest);
+		}
+
+		public async Task<int> RemoveTrainer(int trainerId)
+		{
+			return await _adminRepository.RemoveTrainer(trainerId);
+		}
+
+		public async Task<string> GetTrainerEmail(int trainerId)
+		{
+			return await _adminRepository.GetTrainerEmail(trainerId);
+		}
+
+
+	}
 }

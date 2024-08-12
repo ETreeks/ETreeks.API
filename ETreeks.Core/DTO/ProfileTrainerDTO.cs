@@ -44,7 +44,7 @@ namespace ETreeks.Core.DTO
         public string Email { get; set; }
         public string Imagename { get; set; }
         public string Specialization { get; set; }
-        public string Gender { get; set; }
+        public string gender { get; set; }
         public long Phone { get; set; }
         public string Bio_Trainer { get; set; }
         public AddressDto2 Address { get; set; }

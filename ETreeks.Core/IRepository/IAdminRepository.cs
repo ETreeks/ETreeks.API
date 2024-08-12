@@ -12,9 +12,9 @@ namespace ETreeks.Core.IRepository
     public interface IAdminRepository
     {
         Task<List<ReservationDate>> GetAllReservation();
-        Task<List<Guser>> GetAllPendingTrainer();
-        //Task<List<Guser>> DisplayAllStudents();
-        Task<List<StudentInfo>> DisplayAllStudents();
+		Task<List<PendingTrainerDTO>> GetAllPendingTrainer();
+		//Task<List<Guser>> DisplayAllStudents();
+		Task<List<StudentInfo>> DisplayAllStudents();
         //Task<StudentInfo> DisplayAllStudents();
         Task<List<Guser>> DisplayAllTrainers();
         Task<List<Guser>> DisplayAllUsers();
@@ -43,11 +43,13 @@ namespace ETreeks.Core.IRepository
         Task<Guser> GetProfileAdmin(int userId);
         Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto);
 
+		Task<string> GetTrainerEmail(int trainerId);
 
-        Task AccepttesTimonial(int id);
+		Task AccepttesTimonial(int id);
 
         Task AccepttesCourse(int id);
-
-        List<Guser> SearchTrainerByName(string trainerName);
+		Task<int> ApproveTrainer(int trainerId);
+		Task<int> RemoveTrainer(int trainerId);
+		List<Guser> SearchTrainerByName(string trainerName);
     }
 }

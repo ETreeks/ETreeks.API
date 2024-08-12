@@ -1,4 +1,5 @@
-﻿using ETreeks.Core.Data;
+﻿using ETreeks.API.Helper;
+using ETreeks.Core.Data;
 using ETreeks.Core.DTO;
 using ETreeks.Core.IService;
 using ETreeks.Infra.Service;
@@ -7,6 +8,7 @@ using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.DirectoryServices;
+using System.Linq.Expressions;
 
 namespace ETreeks.API.Controllers
 {
@@ -17,10 +19,12 @@ namespace ETreeks.API.Controllers
         // TesTTTTTTTTTTT
 
         private readonly IAdminService _adminService;
+        private readonly IEmailService emailService;
 
-        public AdminController(IAdminService adminService)
+        public AdminController(IAdminService adminService, IEmailService service)
         {
             _adminService = adminService;
+            this.emailService = service;
         }
         [HttpGet]
         [Route("GetAllReservation")]
@@ -59,10 +63,12 @@ namespace ETreeks.API.Controllers
         }
         [HttpGet]
         [Route("GetAllPendingTrainer")]
-        public async Task<List<Guser>> GetAllPendingTrainer()
+        public async Task<List<PendingTrainerDTO>> GetAllPendingTrainer()
         {
             return await _adminService.GetAllPendingTrainer();
         }
+
+
         [HttpGet]
         [Route("GetCountStudents")]
         public async Task<int> GetCountStudents()
@@ -170,7 +176,7 @@ namespace ETreeks.API.Controllers
         [Route("AcceptT/{id}")]
         public async Task AcceptTestimonial(int id)
         {
-             await _adminService.AccepttesTimonial(id);
+            await _adminService.AccepttesTimonial(id);
         }
 
         [HttpPut]
@@ -218,17 +224,103 @@ namespace ETreeks.API.Controllers
             await _adminService.UpdateProfileAdmin(updateProfileAdminDto);
             return Ok();
         }
+		[HttpGet("SearchTrainerByName")]
+		public IActionResult SearchTrainerByName(string trainerName)
+		{
+			var trainers = _adminService.SearchTrainerByName(trainerName);
+			if (trainers == null || trainers.Count == 0)
+			{
+				return NotFound("No trainers found with the specified name.");
+			}
+			return Ok(trainers);
+		}
+		//[HttpPost]
+		//[Route("ApproveTrainer/{trainerId}")]
+		//public async Task<IActionResult> ApproveTrainer(int trainerId)
+		//{
+		//	var result = await _adminService.ApproveTrainer(trainerId);
+		//	return Ok(result);
+		//}
 
-        [HttpGet("SearchTrainerByName")]
-        public IActionResult SearchTrainerByName(string trainerName)
+		[HttpDelete]
+        [Route("RemoveTrainer/{trainerId}")]
+        public async Task<IActionResult> RemoveTrainer(int trainerId)
         {
-            var trainers = _adminService.SearchTrainerByName(trainerName);
-            if (trainers == null || trainers.Count == 0)
+            var result = await _adminService.RemoveTrainer(trainerId);
+            return Ok(result);
+        }
+		//      [HttpGet]
+		//      [Route("GetTrainerEmail/{trainerId}")]
+
+		//public async Task<IActionResult> GetTrainerEmail(int trainerId)
+		//{
+		//	var email = await _adminService.GetTrainerEmail(trainerId);
+
+		//	if (string.IsNullOrEmpty(email))
+		//	{
+		//		return NotFound("Trainer email not found.");
+		//	}
+
+		//	return Ok(new { Email = email });
+		//}
+		[HttpPost("ApproveTrainer/{TrainerId}")]
+		public async Task<IActionResult> ApproveTrainer(int TrainerId)
+		{
+			try
+			{
+				var result = await _adminService.ApproveTrainer(TrainerId);
+
+				if (result < 0) // Assuming result > 0 indicates success
+				{
+					return Ok(new { Message = "Trainer approved successfully." });
+				}
+				else
+				{
+					// Return a 404 Not Found if no rows were updated
+					return NotFound(new { Message = "Trainer not found or already approved." });
+				}
+			}
+			catch (Exception ex)
+			{
+				// Log the exception (use a logging framework in production)
+				Console.WriteLine($"Error approving trainer: {ex.Message}");
+				return StatusCode(500, new { Message = "An error occurred while approving the trainer." });
+			}
+		}
+
+		[HttpGet]
+		[Route("GetTrainerEmail/{trainerId}")]
+		public async Task<IActionResult> GetTrainerEmail(int trainerId)
+		{
+			var email = await _adminService.GetTrainerEmail(trainerId);
+
+			if (string.IsNullOrEmpty(email))
+			{
+				return NotFound("Trainer email not found.");
+			}
+
+			return Ok(new { Email = email });
+		}
+
+
+		[HttpPost("SendMail")]
+
+        public async Task<IActionResult> SendMail()
+        {
+            try
             {
-                return NotFound("No trainers found with the specified name.");
+                MailRequest mailRequest = new MailRequest();
+                mailRequest.TOEmail = "lutfitala35@gmail.com";
+                mailRequest.Subject = "Welcome Our New Trainer , You Have Access To Login In Now";
+                mailRequest.Body = "Have A Great Day.";
+                await emailService.SendEmailAsync(mailRequest);
+                return Ok();
             }
-            return Ok(trainers);
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
-    }
-}
+    } }

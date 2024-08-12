@@ -3,9 +3,12 @@ using ETreeks.Core.Data;
 using ETreeks.Core.DTO;
 using ETreeks.Core.ICommon;
 using ETreeks.Core.IRepository;
+using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.DirectoryServices;
 using System.Linq;
 using System.Text;
@@ -43,10 +46,10 @@ namespace ETreeks.Infra.Repository
             var result = await _dbContext.Connection.QueryAsync<AddressDto, StudentInfo, StudentInfo>("Admin_Package.DisplayAllStudents",
              (address, guser) =>
               {
-             guser.Address = address;
-             return guser;
+                  guser.Address = address;
+                  return guser;
               },
-            
+
              splitOn: "id",
              commandType: CommandType.StoredProcedure);
 
@@ -85,12 +88,13 @@ namespace ETreeks.Infra.Repository
 
             return result.ToList();
         }
-
-        public async Task<List<Guser>> GetAllPendingTrainer()
+        public async Task<List<PendingTrainerDTO>> GetAllPendingTrainer()
         {
-            var result = await _dbContext.Connection.QueryAsync<Guser>("Admin_Package.GetAllPendingTrainer", commandType: CommandType.StoredProcedure);
+            var result = await _dbContext.Connection.QueryAsync<PendingTrainerDTO>("Admin_Package.GetAllPendingTrainer", commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
+
+
 
         public async Task<int> GetCountAcceptedTrainers()
         {
@@ -164,7 +168,7 @@ namespace ETreeks.Infra.Repository
             return result;
         }
 
-    
+
 
         public async Task<List<TotalCourses>> TotalCoursesInEachCategory()
         {
@@ -174,7 +178,7 @@ namespace ETreeks.Infra.Repository
 
         public async Task<List<TotalStudents>> TotalStudentInEachCourse()
         {
-            var result =  _dbContext.Connection.Query<TotalStudents>("Admin_Package.TotalStudentInEachCourse", commandType: CommandType.StoredProcedure);
+            var result = _dbContext.Connection.Query<TotalStudents>("Admin_Package.TotalStudentInEachCourse", commandType: CommandType.StoredProcedure);
             return result.ToList();
         }
 
@@ -190,16 +194,16 @@ namespace ETreeks.Infra.Repository
             //return result.ToList();
 
             var result = await _dbContext.Connection.QueryAsync<TrainerWithStudents, StudentDetail, TrainerWithStudents>
-           ( "Admin_Package.GetStudentsPerTrainer",
+           ("Admin_Package.GetStudentsPerTrainer",
            (trainer, student) =>
            {
-              trainer.Students = trainer.Students ?? new List<StudentDetail>();
-              trainer.Students.Add(student);
-              return trainer;
+               trainer.Students = trainer.Students ?? new List<StudentDetail>();
+               trainer.Students.Add(student);
+               return trainer;
            },
-           splitOn: "StudentUsername" ,
+           splitOn: "StudentUsername",
            commandType: CommandType.StoredProcedure);
-                
+
 
             return result.ToList();
         }
@@ -266,7 +270,7 @@ namespace ETreeks.Infra.Repository
             var param = new DynamicParameters();
             param.Add("testimonial_id", id, dbType: DbType.Int32, direction: ParameterDirection.Input);
             await _dbContext.Connection.ExecuteAsync("Admin_Package.AcceptTestimonial", param, commandType: CommandType.StoredProcedure);
-          
+
         }
 
         public async Task AccepttesCourse(int id)
@@ -277,17 +281,76 @@ namespace ETreeks.Infra.Repository
         }
 
 
-        public List<Guser> SearchTrainerByName(string trainerName)
+		public List<Guser> SearchTrainerByName(string trainerName)
+		{
+			string query = "ADMIN_PACKAGE.SEARCHFORTRAINERNAME";
+
+			var parameters = new DynamicParameters();
+			parameters.Add("Trainer_Name", trainerName, DbType.String, ParameterDirection.Input);
+
+			using (var multi = _dbContext.Connection.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
+			{
+				return multi.Read<Guser>().ToList();
+			}
+		}
+		//public async Task<int> ApproveTrainer(int trainerId)
+		//{
+		//	var param = new DynamicParameters();
+		//	param.Add("Trainer_ID", trainerId, DbType.Int32, ParameterDirection.Input);
+		//	return await _dbContext.Connection.ExecuteAsync("Admin_Package.ApproveTrainer", param, commandType: CommandType.StoredProcedure);
+		//}
+
+		public async Task<int> RemoveTrainer(int trainerId)
         {
-            string query = "ADMIN_PACKAGE.SEARCH_FOR_TRAINER_NAME";
-
-            var parameters = new DynamicParameters();
-            parameters.Add("Trainer_Name", trainerName, DbType.String, ParameterDirection.Input);
-
-            using (var multi = _dbContext.Connection.QueryMultiple(query, parameters, commandType: CommandType.StoredProcedure))
-            {
-                return multi.Read<Guser>().ToList();
-            }
+            var param = new DynamicParameters();
+            param.Add("Trainer_ID", trainerId, DbType.Int32, ParameterDirection.Input);
+            return await _dbContext.Connection.ExecuteAsync("Admin_Package.RemoveTrainer", param, commandType: CommandType.StoredProcedure);
         }
-    }
+
+
+		public async Task<int> ApproveTrainer(int trainerId)
+		{
+			var param = new DynamicParameters();
+			param.Add("Trainer_ID", trainerId, DbType.Int32, ParameterDirection.Input);
+
+			// Log parameters and the procedure name
+			Console.WriteLine($"Calling procedure with Trainer_ID: {trainerId}");
+
+			int result = await _dbContext.Connection.ExecuteAsync("Admin_Package.ApproveTrainer", param, commandType: CommandType.StoredProcedure);
+
+			// Log the result of the procedure call
+			Console.WriteLine($"Procedure result: {result}");
+
+			return result;
+		}
+
+		//public async Task<string> GetTrainerEmail(int trainerId)
+		//      {
+		//          var sql = "Admin_Package.GetTrainerEmail";
+
+		//          using (var multi = await _dbContext.Connection.QueryMultipleAsync(
+		//              sql,
+		//              new { trainer_id = trainerId },
+		//              commandType: CommandType.StoredProcedure))
+		//          {
+		//              var email = await multi.ReadFirstOrDefaultAsync<string>();
+		//              return email;
+		//          }
+		//      }
+		public async Task<string> GetTrainerEmail(int trainerId)
+		{
+			var sql = "Admin_Package.GetTrainerEmail";
+
+			var email = await _dbContext.Connection.QuerySingleOrDefaultAsync<string>(
+				sql,
+				new { Trainer_ID = trainerId },
+				commandType: CommandType.StoredProcedure
+			);
+
+			return email;
+		}
+
+
+
+	}
 }

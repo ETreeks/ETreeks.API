@@ -12,10 +12,10 @@ namespace ETreeks.Core.IService
     public interface IAdminService
     {
         Task<List<ReservationDate>> GetAllReservation();
+		Task<List<PendingTrainerDTO>> GetAllPendingTrainer();
 
-        Task<List<Guser>> GetAllPendingTrainer();
-        //Task<List<Guser>> DisplayAllStudents();
-        Task<List<StudentInfo>> DisplayAllStudents();
+		//Task<List<Guser>> DisplayAllStudents();
+		Task<List<StudentInfo>> DisplayAllStudents();
         //Task<StudentInfo> DisplayAllStudents();
         Task<List<Guser>> DisplayAllTrainers();
         Task<List<Guser>> DisplayAllUsers();
@@ -46,11 +46,15 @@ namespace ETreeks.Core.IService
         Task AcceptProfileAdmin(int userId, string newRegistrationStatus);
         Task<Guser> GetProfileAdmin(int userId);
         Task UpdateProfileAdmin(UpdateProfileAdminDto updateProfileAdminDto);
+		Task<string> GetTrainerEmail(int Trainer_ID);
 
 
-        Task AccepttesTimonial(int id);
+		Task AccepttesTimonial(int id);
         Task AccepttesCourse(int id);
+		Task<int> ApproveTrainer(int trainerId);
+		Task<int> RemoveTrainer(int trainerId);
+		List<Guser> SearchTrainerByName(string trainerName);
+		Task SendApprovalEmail(string email);
 
-        List<Guser> SearchTrainerByName(string trainerName);
-    }
+	}
 }

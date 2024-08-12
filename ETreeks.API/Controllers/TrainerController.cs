@@ -121,5 +121,24 @@ namespace ETreeks.API.Controllers
             }
             return BadRequest();
         }
-    }
+		[Route("uploadImage")]
+		[HttpPost]
+		public Guser UploadIMage()
+		{
+
+			var file = Request.Form.Files[0];
+			var fileName = Guid.NewGuid().ToString() + "_" + file.FileName;
+			var fullPath = Path.Combine("C:\\Users\\hp\\OneDrive\\Desktop\\FINALONE\\ETreeks_Angular10\\ETreeks\\src\\assets\\Images", fileName);
+			using (var stream = new FileStream(fullPath, FileMode.Create))
+			{
+				file.CopyTo(stream);
+			}
+			Guser item = new Guser();
+			item.Imagename = fileName;
+			return item;
+		}
+
+
+
+	}
 }

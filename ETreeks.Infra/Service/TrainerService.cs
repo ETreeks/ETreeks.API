@@ -62,11 +62,13 @@ namespace ETreeks.Infra.Service
         {
             return await _trainerRepository.ViewProfile(id);
         }
-        public async Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto)
-        {
-            return await _trainerRepository.UpdateProfile(profileTrainerDto);
-        }
+		public async Task<bool> UpdateProfile(ProfileTrainerDTO profileTrainerDto)
+		{
+			return await _trainerRepository.UpdateProfile(profileTrainerDto);
+		}
 
 
-    }
+
+
+	}
 }

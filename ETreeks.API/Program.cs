@@ -1,3 +1,4 @@
+using ETreeks.API.Helper;
 using ETreeks.API.Hubs;
 using ETreeks.Core.ICommon;
 using ETreeks.Core.IRepository;
@@ -75,16 +76,18 @@ namespace ETreeks.API
 			builder.Services.AddScoped<ICourseSessionRepository, CourseSessionRepository>();
 			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
 
+            builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
+            builder.Services.AddTransient<IEmailService, EmailService>();
 
-            //builder.Services.AddCors(corsOptions =>
-            //{
-            //    corsOptions.AddPolicy("policy",
-            //    builder =>
-            //    {
-            //        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-            //    });
-            //});
-            builder.Services.AddCors(options =>
+			//builder.Services.AddCors(corsOptions =>
+			//{
+			//    corsOptions.AddPolicy("policy",
+			//    builder =>
+			//    {
+			//        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+			//    });
+			//});
+			builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowSpecificOrigins",
                     builder =>
@@ -142,8 +145,9 @@ namespace ETreeks.API
             //app.MapControllers();
             app.UseCors("AllowSpecificOrigins");
             app.MapControllers();
+			app.UseStaticFiles(); // This will serve static files from wwwroot by default
 
-            app.UseEndpoints(endpoints =>
+			app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<NotificationHub>("/notificationHub");
