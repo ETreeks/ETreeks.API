@@ -25,7 +25,7 @@ namespace ETreeks.API.Controllers
         public async Task CreateBookingRequest([FromBody] Reservation reservation)
         {
             await _studentService.CreateBookingRequest(reservation);
-            Console.WriteLine($"Attempting to send notification to user {reservation.Gusers_Id}.");
+            //Console.WriteLine($"Attempting to send notification to user {reservation.Gusers_Id}.");
 
             // await _hubContext.Clients.User(reservation.Gusers_Id.ToString()).SendAsync("ReceiveNotification", "Your booking request has been created.");
             //await _hubContext.Clients.Users(reservation.Gusers_Id.ToString()).SendAsync("ReceiveNotification", "hi");
@@ -34,7 +34,9 @@ namespace ETreeks.API.Controllers
 
             // Notify the user
             await _hubContext.Clients.Group(reservation.Gusers_Id.ToString()).SendAsync("ReceiveNotification", "Your booking request has been created and reservation status is pending ");
-            Console.WriteLine($"Notification sent to user {reservation.Gusers_Id}");
+          
+            
+            // Console.WriteLine($"Notification sent to user {reservation.Gusers_Id}");
         }
 
 

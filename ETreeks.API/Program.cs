@@ -76,8 +76,14 @@ namespace ETreeks.API
 			builder.Services.AddScoped<ICourseSessionRepository, CourseSessionRepository>();
 			builder.Services.AddScoped<ICourseSessionService, CourseSessionService>();
 
+<<<<<<< HEAD
             builder.Services.Configure<EmailSettings>(builder.Configuration.GetSection("EmailSettings"));
             builder.Services.AddTransient<IEmailService, EmailService>();
+=======
+            builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+            builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+>>>>>>> 097b0111b33a17feaed0e1f8e4c4dc2ebd472bb2
 
 			//builder.Services.AddCors(corsOptions =>
 			//{

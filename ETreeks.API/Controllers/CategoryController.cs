@@ -39,7 +39,8 @@ namespace ETreeks.API.Controllers
 
 		// Create a new category
 		[HttpPost("CreateCategory")]
-		public async Task<ActionResult> CreateCategory([FromBody] Category category)
+        [CheckClaims("RoleId", "1")]
+        public async Task<ActionResult> CreateCategory([FromBody] Category category)
 		{
 			if (category == null)
 			{
@@ -52,7 +53,8 @@ namespace ETreeks.API.Controllers
 
 		// Update an existing category
 		[HttpPut("UpdateCategory")]
-		public async Task<ActionResult> UpdateCategory([FromBody] Category category)
+        [CheckClaims("RoleId", "1")]
+        public async Task<ActionResult> UpdateCategory([FromBody] Category category)
 		{
 			if (category == null)
 			{
@@ -65,7 +67,8 @@ namespace ETreeks.API.Controllers
 
 		// Delete a category
 		[HttpDelete("DeleteCategory/{id}")]
-		public async Task<ActionResult> DeleteCategory(int id)
+        [CheckClaims("RoleId", "1")]
+        public async Task<ActionResult> DeleteCategory(int id)
 		{
 			var category = await _categoryService.GetCategoryById(id);
 			if (category == null)

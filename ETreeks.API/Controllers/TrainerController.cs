@@ -121,6 +121,7 @@ namespace ETreeks.API.Controllers
             }
             return BadRequest();
         }
+<<<<<<< HEAD
 		[Route("uploadImage")]
 		[HttpPost]
 		public Guser UploadIMage()
@@ -141,4 +142,23 @@ namespace ETreeks.API.Controllers
 
 
 	}
+=======
+
+
+        [HttpPut]
+        [Route("Completed/{id}")]
+        public async Task CompletedCourse(int id)
+        {
+            await _trainerService.CompletedCourse(id);
+        }
+
+
+        [HttpGet]
+        [Route("GetAllReservationT2/{id}")]
+        public async Task<List<Reservation>> GetAllReservationT2(int id)
+        {
+            return await _trainerService.GetAllReservationT2(id);
+        }
+    }
+>>>>>>> 097b0111b33a17feaed0e1f8e4c4dc2ebd472bb2
 }

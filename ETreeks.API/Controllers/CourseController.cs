@@ -16,7 +16,7 @@ namespace ETreeks.API.Controllers
         {
             _courseService = courseService;
         }
-
+        //[CheckClaims("RoleId", "2")]
         [HttpPost]
         public async Task CreateCourse(Course course)
         {
@@ -24,7 +24,7 @@ namespace ETreeks.API.Controllers
             //return Ok(new { Id = courseId });
             await _courseService.CreateCourseAsync(course);
         }
-
+        //[CheckClaims("RoleId", "2")]
         [HttpDelete("{courseId}")]
         public async Task DeleteCourse(int courseId)
         {
@@ -36,7 +36,7 @@ namespace ETreeks.API.Controllers
             //return Ok(new { Id = result });
             await _courseService.DeleteCourseAsync(courseId);
         }
-
+       
         [HttpGet]
         public async Task<IActionResult> GetAllCourses()
         {
@@ -46,6 +46,7 @@ namespace ETreeks.API.Controllers
 
 
         [HttpGet("{courseId}")]
+
         public async Task<IActionResult> GetCourseById(int courseId)
         {
             var course = await _courseService.GetCourseByIdAsync(courseId);
@@ -55,7 +56,7 @@ namespace ETreeks.API.Controllers
             }
             return Ok(course);
         }
-
+        //[CheckClaims("RoleId", "2")]
         [HttpPut]
         public async Task UpdateCourse(Course course)
         {

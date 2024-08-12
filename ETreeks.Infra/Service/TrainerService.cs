@@ -67,8 +67,20 @@ namespace ETreeks.Infra.Service
 			return await _trainerRepository.UpdateProfile(profileTrainerDto);
 		}
 
+<<<<<<< HEAD
 
 
 
 	}
+=======
+        public async Task CompletedCourse(int id)
+        {
+            await _trainerRepository.CompletedCourse(id);
+        }
+        public async Task<List<Reservation>> GetAllReservationT2(int id)
+        {
+            return await _trainerRepository.GetAllReservationT2(id);
+        }
+    }
+>>>>>>> 097b0111b33a17feaed0e1f8e4c4dc2ebd472bb2
 }
